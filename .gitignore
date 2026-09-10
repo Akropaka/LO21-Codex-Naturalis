@@ -1,0 +1,22 @@
+# Ignore build directories, IDE settings, and temporary files
+build/
+cmake-build-*/
+.idea/
+.vscode/
+
+# Object files, libraries and executables
+*.o
+*.obj
+*.exe
+*.dll
+*.out
+
+# Temporary files
+*.tmp
+*.swp
+
+# Backup files
+*.bak
+
+# CMake user presets file
+CMakeUserPresets.json
