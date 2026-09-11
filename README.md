@@ -49,6 +49,8 @@ Depuis Vs Code
     2. Taper "CMake Kit"
     3. Suivez les instructions et definissez un compilateur (GXX ou Clang)
 
+Sous Windows vous pouvez très bien utiliser Visual Studio (Code::Blocks par recommander)
+
 ### 2. Build depuis Vs Code (Recommander)
 
 Si vous avez correctement installer Visual Studio Code et 
