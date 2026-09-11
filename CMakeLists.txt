@@ -10,7 +10,10 @@ set(CMAKE_AUTORCC ON) # Enable automatic RCC for Qt
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-add_executable(ProjectLO21-A26 main.cpp src/core/card.cpp)
+add_executable(ProjectLO21-A26 main.cpp src/core/card.cpp
+    src/core/face.cpp
+    src/utils/csvLoader.cpp)
+
 target_link_libraries(ProjectLO21-A26 Qt6::Widgets)
 
 include(CTest)
