@@ -2,7 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "core.h"
+#include "core/card.h"
+#include "core/face.h"
 #include "utils.h"
 #include <vector>
 
@@ -33,7 +34,7 @@ vector<Card> loadCSVToCards(const std::string& filename) {
                 domaine = static_cast<CardDomaine>(std::stoi(cell));
             }
         }
-        Card card(id, name, domaine);
+        Card card(name, domaine);
         // Add the card to your collection or process it as needed
         cards.push_back(card);
     }

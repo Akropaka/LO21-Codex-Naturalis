@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "core.h"
+#include "core/card.h"
 #include <string>
 
 class Card;
