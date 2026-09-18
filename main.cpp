@@ -1,17 +1,17 @@
 #include <iostream>
-#include "core.h"
+#include "core/card.h"
+#include "core/face.h"
 #include "utils.h"
 
 #include <QApplication>
 #include <QMainWindow>
 
 int main(int argc, char** argv){
-    
     // GAME LOGIC
-    Card myCard(1, "Fongique Equilibre", CardDomaine::FONGIQUE);
+    Card myCard("Fongique Equilibre", CardDomaine::FONGIQUE);
 
 
-    std::vector<Card> cards = loadCSVToCards("../assets/cards.csv");
+    std::vector<Card> cards = loadCSVToCards("assets/cards.csv");
 
     // Idea Init for cards
     //vector<Card> cards = Loader.load("path/to/card/data.csv");
@@ -19,7 +19,7 @@ int main(int argc, char** argv){
     Face rectoFace(FaceType::RECTO);
     Face versoFace(FaceType::VERSO);
 
-    myCard.setupCard(rectoFace, versoFace);
+    myCard.setupCard(rectoFace);
 
     // UI
     QApplication app(argc, argv);

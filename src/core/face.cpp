@@ -1,9 +1,11 @@
-#include "core.h"
+#include "core/card.h"
+#include "core/face.h"
 #include <iostream>
 #include "utils.h"
 
 using namespace std;
 
+// REFACTOR
 Face::Face(FaceType face_type) : face_type(face_type) {
     cout << "Face créer sur le côté " << static_cast<int>(face_type) << endl;
 }
