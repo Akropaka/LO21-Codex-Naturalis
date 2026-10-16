@@ -5,8 +5,18 @@
 
 class Card;
 
+/**
+ * @brief Loads cards from a CSV file.
+ * 
+ * @param filename 
+ * @return std::vector<Card> 
+ */
 std::vector<Card> loadCSVToCards(const std::string& filename);
 
+/**
+ * @brief Represents a 2D vector with x and y coordinates.
+ * @details This struct is used to represent positions or directions in a 2D space, such as coordinates on a game board.
+ */
 struct Vector2{
     int x;
     int y;

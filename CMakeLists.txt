@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10.0)
 project(ProjectLO21-A26 VERSION 0.1.0 LANGUAGES C CXX)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/include/core)
 
 # Qt automatic processing settings
 set(CMAKE_AUTOMOC ON) # Enable automatic MOC for Qt
@@ -12,6 +13,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 add_executable(ProjectLO21-A26 main.cpp src/core/card.cpp
     src/core/face.cpp
+    src/core/board.cpp
     src/utils/csvLoader.cpp)
 
 target_link_libraries(ProjectLO21-A26 Qt6::Widgets)

@@ -21,14 +21,11 @@ vector<Card> loadCSVToCards(const std::string& filename) {
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string cell;
-        unsigned int id = 0;
         std::string name;
         CardDomaine domaine = static_cast<CardDomaine>(0);
 
         while (std::getline(ss, cell, ';')) {
-            if (id == 0) {
-                id = static_cast<unsigned int>(std::stoi(cell));
-            } else if (name.empty()) {
+            if (name.empty()) {
                 name = cell;
             } else if (domaine == static_cast<CardDomaine>(0)) {
                 domaine = static_cast<CardDomaine>(std::stoi(cell));

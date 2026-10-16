@@ -1,8 +1,13 @@
 #pragma once
 
 #include "utils.h"
+#include "core/face.h"
 #include "face.h"
 
+/**
+ * @class Card
+ * @brief Represents a card in the game with a unique ID, name, domain, and two faces (recto and verso).
+ */
 class Card {
     private:
         static int num_card;
