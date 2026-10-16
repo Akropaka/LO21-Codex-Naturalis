@@ -18,7 +18,8 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 add_executable(ProjectLO21-A26 main.cpp 
 src/core/card.cpp
-src/core/face.cpp)
+src/core/face.cpp
+src/utils/json.cpp)
 
 target_link_libraries(ProjectLO21-A26 PRIVATE nlohmann_json::nlohmann_json Qt6::Widgets)
 

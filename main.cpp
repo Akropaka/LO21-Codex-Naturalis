@@ -4,6 +4,7 @@
 #include "nlohmann/json.hpp"
 #include "card.h"
 #include "face.h"
+#include "json.h"
 #include <string>
 
 int main(int argc, char** argv){
@@ -13,11 +14,12 @@ int main(int argc, char** argv){
     Core::Face f(1);
     f.AddSlot(Utils::SlotPosition::TopLeft,Utils::Ressource::Animal);
     f.AddSlot(Utils::SlotPosition::BottomRight,Utils::Ressource::Animal);
-    Core::RessourceCard r("Frog",Utils::Domaine::Animal,f);
+    
+    string name = "Wolf";
 
-    json j = r;
-
-    std::cout << j.dump(4) << std::endl;
+    Core::RessourceCard r(name,Utils::Domaine::Animal,f);
+    
+    Json::JsonHandler::getInstance()->WriteCard(r,name);
 
     QMainWindow window;
     window.setWindowTitle("Codex Naturalis");

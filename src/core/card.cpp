@@ -13,8 +13,6 @@ const Core::Face& Core::RessourceCard::getFace(unsigned int i) const {
     }
 }
 
-void Core::to_json(json& j, const Core::RessourceCard& r){
-    j = json{{"name", r.getName()},
-            {"domaine", r.getDomaine()},
-            {"face", r.getFace()}};
+void Core::from_json(const json& j, Core::RessourceCard& r){
+    
 }

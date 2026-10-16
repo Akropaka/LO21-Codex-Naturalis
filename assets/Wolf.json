@@ -1,0 +1,17 @@
+{
+    "domaine": 1,
+    "face": {
+        "borders": [
+            [
+                1,
+                2
+            ],
+            [
+                4,
+                2
+            ]
+        ],
+        "score": 1
+    },
+    "name": "Wolf"
+}

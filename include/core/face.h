@@ -19,7 +19,6 @@ namespace Core {
             const int getScore() const {return score;}
             const map<Utils::SlotPosition,Utils::Ressource>& getBorders() const {return borders;}
             void AddSlot(Utils::SlotPosition sp, Utils::Ressource r);
-    };
-
-    void to_json(json& j, const Face& f);
+            json to_json() const;
+        };
 }

@@ -32,6 +32,9 @@ namespace Core {
                 amount += 1;
             }
             const string& getName() const {return name;}
+            virtual json to_json() const {
+                return json{{"name", name}};
+            }
     };
 
     class RessourceCard : public Card {
@@ -45,9 +48,15 @@ namespace Core {
             };
             const Domaine& getDomaine() const { return domaine;}
             const Face& getFace(unsigned int i=0) const;
+            json to_json() const override {
+                json j = Card::to_json();
+                j["domaine"] = getDomaine();
+                j["face"] = getFace().to_json();
+                return j;
+            }
     };
 
-    void to_json(json& j, const Core::RessourceCard& p);
+    void from_json(const json& j, RessourceCard& r);
 
     class GoldenCard : public RessourceCard {
 
