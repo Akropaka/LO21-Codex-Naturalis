@@ -1,28 +1,23 @@
 #include <iostream>
-#include "core/card.h"
-#include "core/face.h"
-#include "utils.h"
-
 #include <QApplication>
 #include <QMainWindow>
+#include "nlohmann/json.hpp"
+#include "card.h"
+#include "face.h"
+#include <string>
 
 int main(int argc, char** argv){
-    // GAME LOGIC
-    Card myCard("Fongique Equilibre", CardDomaine::FONGIQUE);
 
-
-    std::vector<Card> cards = loadCSVToCards("assets/cards.csv");
-
-    // Idea Init for cards
-    //vector<Card> cards = Loader.load("path/to/card/data.csv");
-
-    Face rectoFace(FaceType::RECTO);
-    Face versoFace(FaceType::VERSO);
-
-    myCard.setupCard(rectoFace);
-
-    // UI
     QApplication app(argc, argv);
+
+    Core::Face f(1);
+    f.AddSlot(Utils::SlotPosition::TopLeft,Utils::Ressource::Animal);
+    f.AddSlot(Utils::SlotPosition::BottomRight,Utils::Ressource::Animal);
+    Core::RessourceCard r("Frog",Utils::Domaine::Animal,f);
+
+    json j = r;
+
+    std::cout << j.dump(4) << std::endl;
 
     QMainWindow window;
     window.setWindowTitle("Codex Naturalis");

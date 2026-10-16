@@ -1,30 +1,13 @@
-#include "core/card.h"
-#include "core/face.h"
-#include <iostream>
-#include "utils.h"
+#include "face.h"
 
-using namespace std;
-
-/**
- * @brief Constructor for the Face class.
- * @param face_type The type of the face (RECTO or VERSO).
- */
-Face::Face(FaceType face_type) : face_type(face_type) {
-    cout << "Face créer sur le côté " << static_cast<int>(face_type) << endl;
+void Core::Face::AddSlot(Utils::SlotPosition sp, Utils::Ressource r) {
+    if(borders.find(sp) != borders.end())
+    {
+        throw "ERROR";
+    }
+    this->borders[sp] = r;
 }
 
-/**
- * @brief Default constructor for the Face class.
- * Initializes the face as RECTO by default.
- */
-Face::Face() : face_type(FaceType::RECTO) {
-
-}
-
-/**
- * @brief Getter for the face type of the face.
- * @return The type of the face (RECTO or VERSO).
- */
-FaceType Face::getFaceType() const {
-    return face_type;
+void Core::to_json(json& j, const Face& f){
+    j = json{{"borders",f.getBorders()}};
 }
