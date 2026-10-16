@@ -16,6 +16,7 @@ namespace Core {
         public:
             Face(){};
             Face(unsigned int s) : score(s){};
+            const int getScore() const {return score;}
             const map<Utils::SlotPosition,Utils::Ressource>& getBorders() const {return borders;}
             void AddSlot(Utils::SlotPosition sp, Utils::Ressource r);
     };

@@ -43,15 +43,8 @@ namespace Core {
             RessourceCard(const string& n, const Domaine& d, const Face& r) : Card(n), domaine(d) {
                 faces[0] = r;
             };
-            const Face& getFace(unsigned int i=0) const {
-                if(i>1 || i<0){
-                    throw "ERROR";
-                }
-                else{
-                    return faces[i];
-                }
-
-            }
+            const Domaine& getDomaine() const { return domaine;}
+            const Face& getFace(unsigned int i=0) const;
     };
 
     void to_json(json& j, const Core::RessourceCard& p);

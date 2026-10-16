@@ -9,5 +9,5 @@ void Core::Face::AddSlot(Utils::SlotPosition sp, Utils::Ressource r) {
 }
 
 void Core::to_json(json& j, const Face& f){
-    j = json{{"borders",f.getBorders()}};
+    j = json{{"score",f.getScore()},{"borders",f.getBorders()}};
 }
