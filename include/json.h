@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 
+using json = nlohmann::json;
+
 namespace Json {
     class JsonHandler{
         private:
@@ -14,6 +16,6 @@ namespace Json {
         public:
             static JsonHandler* getInstance();
             static void WriteCard(const Core::Card& c, const string& name);
-            static Core::Card ReadCard(fstream& f);
+            static Core::Card* ReadCard(const string& name);
         };
 }

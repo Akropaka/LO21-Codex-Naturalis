@@ -12,7 +12,3 @@ const Core::Face& Core::RessourceCard::getFace(unsigned int i) const {
         return faces[i];
     }
 }
-
-void Core::from_json(const json& j, Core::RessourceCard& r){
-    
-}

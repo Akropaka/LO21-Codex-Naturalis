@@ -1,0 +1,6 @@
+### REMINDER ###
+
+- Create Helper Class to Write/Read from file and convert back
+or from json.
+
+- Create Optional (--editor) arg to enter Card Creator mode.

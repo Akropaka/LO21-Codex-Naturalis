@@ -20,6 +20,9 @@ int main(int argc, char** argv){
     Core::RessourceCard r(name,Utils::Domaine::Animal,f);
     
     Json::JsonHandler::getInstance()->WriteCard(r,name);
+    auto c = Json::JsonHandler::getInstance()->ReadCard(name);
+
+    std::cout << c->getName() << std::endl;
 
     QMainWindow window;
     window.setWindowTitle("Codex Naturalis");

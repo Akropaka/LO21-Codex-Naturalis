@@ -20,5 +20,12 @@ namespace Core {
             const map<Utils::SlotPosition,Utils::Ressource>& getBorders() const {return borders;}
             void AddSlot(Utils::SlotPosition sp, Utils::Ressource r);
             json to_json() const;
+            static Face* from_json(json& j) {
+                Face* f = new Face(j.at("score"));
+                for(auto b : j.at("borders")){
+                    f->AddSlot(b[0], b[1]);
+                }
+                return f;
+            }
         };
 }
