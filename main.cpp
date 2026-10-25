@@ -1,7 +1,6 @@
-#include <iostream>
 #include <QApplication>
+#include <QDebug>
 #include <QMainWindow>
-#include "nlohmann/json.hpp"
 #include "card.h"
 #include "face.h"
 #include "json.h"
@@ -15,14 +14,16 @@ int main(int argc, char** argv){
     f.AddSlot(Utils::SlotPosition::TopLeft,Utils::Ressource::Animal);
     f.AddSlot(Utils::SlotPosition::BottomRight,Utils::Ressource::Animal);
     
-    string name = "Wolf";
+    const QString name = "Wolf";
 
     Core::RessourceCard r(name,Utils::Domaine::Animal,f);
     
-    Json::JsonHandler::getInstance()->WriteCard(r,name);
-    auto c = Json::JsonHandler::getInstance()->ReadCard(name);
+    Json::JsonHandler::getInstance()->WriteCard(r,name, "ressources");
+    auto c = Json::JsonHandler::getInstance()->ReadCard(name, "ressources");
 
-    std::cout << c->getName() << std::endl;
+    qInfo() << c->getName();
+
+    Loader::CardDatabase::getInstance();
 
     QMainWindow window;
     window.setWindowTitle("Codex Naturalis");

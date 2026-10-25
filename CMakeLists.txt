@@ -4,11 +4,6 @@ project(ProjectLO21-A26 VERSION 0.1.0 LANGUAGES C CXX)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/core)
 
-include(FetchContent)
-
-FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
-FetchContent_MakeAvailable(json)
-
 # Qt automatic processing settings
 set(CMAKE_AUTOMOC ON) # Enable automatic MOC for Qt
 set(CMAKE_AUTOUIC ON) # Enable automatic UIC for Qt
@@ -21,8 +16,5 @@ src/core/card.cpp
 src/core/face.cpp
 src/utils/json.cpp)
 
-target_link_libraries(ProjectLO21-A26 PRIVATE nlohmann_json::nlohmann_json Qt6::Widgets)
-
-include(CTest)
-enable_testing()
+target_link_libraries(ProjectLO21-A26 PRIVATE Qt6::Widgets)
 

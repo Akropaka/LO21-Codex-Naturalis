@@ -1,9 +1,6 @@
 #pragma once
 #include "card.h"
-#include <iostream>
-#include <fstream>
-
-using json = nlohmann::json;
+#include <QString>
 
 namespace Json {
     class JsonHandler{
@@ -15,7 +12,8 @@ namespace Json {
             JsonHandler& operator=(const JsonHandler&) = delete;
         public:
             static JsonHandler* getInstance();
-            static void WriteCard(const Core::Card& c, const string& name);
-            static Core::Card* ReadCard(const string& name);
+            static QString GetAssetsDirectory();
+            static void WriteCard(const Core::Card& c, const QString& name, const QString& pile);
+            static Core::Card* ReadCard(const QString& name, const QString& pile);
         };
 }

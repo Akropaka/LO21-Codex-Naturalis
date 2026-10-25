@@ -1,11 +1,10 @@
 #pragma once
 #include <map>
 #include "utils.h"
-#include <nlohmann/json.hpp>
+#include <QJsonObject>
+#include <QJsonArray>
 
 using namespace std;
-
-using json = nlohmann::json;
 
 namespace Core {
 
@@ -19,13 +18,7 @@ namespace Core {
             const int getScore() const {return score;}
             const map<Utils::SlotPosition,Utils::Ressource>& getBorders() const {return borders;}
             void AddSlot(Utils::SlotPosition sp, Utils::Ressource r);
-            json to_json() const;
-            static Face* from_json(json& j) {
-                Face* f = new Face(j.at("score"));
-                for(auto b : j.at("borders")){
-                    f->AddSlot(b[0], b[1]);
-                }
-                return f;
-            }
+            QJsonObject toJson() const;
+            static Face fromJson(const QJsonObject &json);
         };
 }

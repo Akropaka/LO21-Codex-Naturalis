@@ -1,8 +1,12 @@
 #include "json.h"
+#include <QCoreApplication>
+#include <QFile>
+#include <QDir>
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <stdexcept>
 
 using namespace Json;
-
-using json = nlohmann::json;
 
 JsonHandler* JsonHandler::instance = nullptr;
 
@@ -13,22 +17,33 @@ JsonHandler* JsonHandler::getInstance() {
     return instance;
 }
 
-void JsonHandler::WriteCard(const Core::Card& c, const string& name){
-    string extension = ".json";
-    ofstream file("assets/" + name + extension,std::ios_base::out);
-    file << c.to_json().dump(4);
-    file.close();
+QString JsonHandler::GetAssetsDirectory() {
+    const QString startingPath = QDir::currentPath();
+    QDir directory(startingPath);
+    const QString assetsPath = directory.filePath("assets");
+
+    return assetsPath;
 }
 
-Core::Card* JsonHandler::ReadCard(const string& name) {
-    string extension = ".json";
-    ifstream file("assets/" + name + extension);
-    if (!file) throw "Error";
-    json j;
-    file >> j;
-    file.close();
-    const string type = j.value("type", "card");
-    if (type == "ressource") return Core::RessourceCard::from_json(j);
-    if (type == "card") return Core::Card::from_json(j);
+void JsonHandler::WriteCard(const Core::Card& c, const QString& name, const QString& pile){
+    const QString path = QDir(GetAssetsDirectory()).filePath(QStringLiteral("%1/%2.json").arg(pile, name));
+    QFile file(path);
+    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    QJsonObject json = c.toJson();
+    json["type"] = dynamic_cast<const Core::RessourceCard*>(&c) ? "ressource" : "card";
+    const QByteArray data = QJsonDocument(json).toJson(QJsonDocument::Indented);
+    file.write(data);
+}
+
+Core::Card* JsonHandler::ReadCard(const QString& name, const QString& pile) {
+    const QString path = QDir(GetAssetsDirectory()).filePath(QStringLiteral("%1/%2.json").arg(pile, name));
+    QFile file(path);
+    file.open(QIODevice::ReadOnly);
+    const QJsonDocument document = QJsonDocument::fromJson(file.readAll());
+    const QJsonObject json = document.object();
+    const QString type = json.value("type").toString("card");
+
+    if (type == "ressource") return new Core::RessourceCard(Core::RessourceCard::fromJson(json));
+    if (type == "card") return new Core::Card(Core::Card::fromJson(json));
     throw "Error";
 }

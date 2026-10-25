@@ -1,0 +1,12 @@
+{
+    "domaine": 1,
+    "name": "Wolf",
+    "recto": {
+        "borders": {
+            "1": 2,
+            "4": 2
+        },
+        "score": 1
+    },
+    "type": "ressource"
+}
