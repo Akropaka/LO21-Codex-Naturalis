@@ -3,6 +3,8 @@ project(ProjectLO21-A26 VERSION 0.1.0 LANGUAGES C CXX)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/core)
+include_directories(${CMAKE_SOURCE_DIR}/include/view)
+include_directories(${CMAKE_SOURCE_DIR}/include/tools)
 
 # Qt automatic processing settings
 set(CMAKE_AUTOMOC ON) # Enable automatic MOC for Qt
@@ -14,6 +16,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 add_executable(ProjectLO21-A26 main.cpp 
 src/core/card.cpp
 src/core/face.cpp
+src/view/consoleViewer.cpp
 src/utils/json.cpp)
 
 target_link_libraries(ProjectLO21-A26 PRIVATE Qt6::Widgets)

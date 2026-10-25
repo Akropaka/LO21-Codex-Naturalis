@@ -38,7 +38,13 @@ namespace Core {
             virtual QJsonObject toJson() const;
             static Card fromJson(const QJsonObject &json);
     };
-
+    /*! \class RessourceCard
+        \author <Thomas El Haj Hussein>
+        \brief A specialized Card class that represent a Card from the Ressource pile
+        
+        \param domaine a domaine linked to the card.
+        \param faces a table of [2] entries that represent both faces.
+    */
     class RessourceCard : public Card {
         protected:
             Domaine domaine;
