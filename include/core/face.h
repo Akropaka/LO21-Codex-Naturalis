@@ -7,7 +7,12 @@
 using namespace std;
 
 namespace Core {
+    /*! \class Face
+        \author <Thomas El Haj Hussein>
+        \brief A class that represent the face of a Card Ressource and below classes
 
+        Does have borders and may have a score
+    */
     class Face {
         private:
             map<Utils::SlotPosition,Utils::Ressource> borders;

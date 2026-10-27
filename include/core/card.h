@@ -15,8 +15,6 @@ namespace Core {
         \brief A class that represent the card logic
         
         A base class used for more specifics cards class.
-        \param name a name that refer to the card.
-        \param id is defined by a static field and should never be defined elsewhere.
     */
     class Card {
         protected:

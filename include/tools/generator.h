@@ -1,5 +1,5 @@
 #pragma once
-
+#include <QJsonObject>
 /* 
     \class Generator
     \brief A class used to create Card from the terminal
@@ -20,6 +20,9 @@ namespace Tools {
     class CardGenerator{
         private:
             // Toutes les méthodes qui paraissent utiles
+            void showCardsFromPile(QString pile);
+            void createCard();
+            void deleteCard();
         public:
             CardGenerator(); // A implémenter avec do...while dans le .cpp, doit écrire dans les bons dossiers !
             // exemple : ressources
