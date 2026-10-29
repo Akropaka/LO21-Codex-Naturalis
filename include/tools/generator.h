@@ -9,7 +9,7 @@
         Elle doit prévoir une boucle do while(true) qui controle les saisies du l'utilisateur pour générer une carte
         Bonus : afficher toutes les cartes
 
-        Methodés utiles dans le header json.h.
+        Methodes utiles dans le header json.h.
             Dans le namespace Json :
 
             static void WriteCard(const Core::Card& c, const QString& name, const QString& pile);
@@ -24,8 +24,9 @@ namespace Tools {
             void createCard();
             void deleteCard();
         public:
-            CardGenerator() {}; // A implémenter avec do...while dans le .cpp, doit écrire dans les bons dossiers !
+            CardGenerator(); // A implémenter avec do...while dans le .cpp, doit écrire dans les bons dossiers !
             // exemple : ressources
             // retirer les {} et écrire le code dans le cpp
-    };
+            // Demande à l'utilisateur si il veut supprimer, ajouter des cartes, montrer les cartes...
+        };
 }
