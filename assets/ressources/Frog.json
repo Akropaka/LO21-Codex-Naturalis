@@ -1,0 +1,12 @@
+{
+    "domaine": 1,
+    "name": "Frog",
+    "recto": {
+        "borders": {
+            "1": 6,
+            "2": 0
+        },
+        "score": 1
+    },
+    "type": "ressource"
+}

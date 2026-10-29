@@ -65,7 +65,12 @@ namespace Core {
 }
 
 namespace Loader {
-
+    /*! \class CardDatabase
+        \author <Thomas El Haj Hussein>
+        \brief A class that gather all data from file and populate vectors representing every cards of the game
+        
+        A Singleton class, gather json data from file to populate vectors and give access to theses cards to other class.
+    */
     class CardDatabase {
         private:
             vector<Core::Card*> baseCards;

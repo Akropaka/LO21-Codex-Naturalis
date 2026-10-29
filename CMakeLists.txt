@@ -19,7 +19,8 @@ src/core/face.cpp
 src/core/board.cpp
 src/view/consoleViewer.cpp
 src/tools/generator.cpp
-src/utils/json.cpp)
+src/utils/json.cpp
+src/core/player.cpp)
 
 target_link_libraries(ProjectLO21-A26 PRIVATE Qt6::Widgets)
 

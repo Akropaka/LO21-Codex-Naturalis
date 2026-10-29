@@ -4,17 +4,26 @@
 #include "card.h"
 #include "face.h"
 #include "json.h"
+#include "generator.h"
 #include <string>
 
 int main(int argc, char** argv){
 
-    QApplication app(argc, argv);
+    for(int i=1; i<argc-1; i++){
+        if(argv[i] == "-e" || argv[i] == "--editor")
+        {
+            Tools::CardGenerator();
+        }
+    }
 
+    // Création d'une face
     Core::Face f(1);
-    f.AddSlot(Utils::SlotPosition::TopLeft,Utils::Ressource::Animal);
-    f.AddSlot(Utils::SlotPosition::BottomRight,Utils::Ressource::Animal);
+
+    // Ajouts de coins
+    f.AddSlot(Utils::SlotPosition::TopLeft,Utils::Ressource::Feather);
+    f.AddSlot(Utils::SlotPosition::TopRight,Utils::Ressource::Empty);
     
-    const QString name = "Wolf";
+    const QString name = "Frog";
 
     Core::RessourceCard r(name,Utils::Domaine::Animal,f);
     
@@ -24,6 +33,10 @@ int main(int argc, char** argv){
     qInfo() << c->getName();
 
     Loader::CardDatabase::getInstance();
+
+    // QT
+
+    QApplication app(argc, argv);
 
     QMainWindow window;
     window.setWindowTitle("Codex Naturalis");
