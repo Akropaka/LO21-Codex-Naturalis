@@ -24,7 +24,8 @@ namespace Tools {
             void createCard();
             void deleteCard();
         public:
-            CardGenerator(); // A implémenter avec do...while dans le .cpp, doit écrire dans les bons dossiers !
+            CardGenerator() {}; // A implémenter avec do...while dans le .cpp, doit écrire dans les bons dossiers !
             // exemple : ressources
+            // retirer les {} et écrire le code dans le cpp
     };
 }

@@ -1,9 +1,11 @@
-#include "view/consoleViewer.h"
+#include "consoleViewer.h"
 
-void consoleViewer::printCard(const Core::Card& c){
+using namespace View;
+
+void ConsoleViewer::printCard(const Core::Card& card){
     return;
 }
 
-void consoleViewer::printCard(const Core::RessourceCard& c){
+void ConsoleViewer::printCard(const Core::RessourceCard& card){
     return;
 }

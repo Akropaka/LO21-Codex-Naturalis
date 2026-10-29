@@ -20,9 +20,19 @@ JsonHandler* JsonHandler::getInstance() {
 QString JsonHandler::GetAssetsDirectory() {
     const QString startingPath = QDir::currentPath();
     QDir directory(startingPath);
-    const QString assetsPath = directory.filePath("assets");
-
-    return assetsPath;
+    QString assetsPath = directory.filePath("assets");
+    QFileInfo fileInfo(assetsPath);
+    if(fileInfo.exists()){
+        if(fileInfo.isDir()){
+            return assetsPath;
+        }
+    }
+    else{
+        QDir parentDir = directory.filePath("..");
+        assetsPath = parentDir.filePath("assets");
+        return assetsPath;
+    }
+    throw "Error";
 }
 
 void JsonHandler::WriteCard(const Core::Card& c, const QString& name, const QString& pile){
