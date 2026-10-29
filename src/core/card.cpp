@@ -80,3 +80,7 @@ Loader::CardDatabase* Loader::CardDatabase::getInstance(){
     instance = new CardDatabase();
     return instance;
 }
+
+vector<RessourceCard*> Loader::CardDatabase::getCardsRessources() const {
+    return ressourceCards;
+}

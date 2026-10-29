@@ -6,6 +6,7 @@
 #include "json.h"
 #include "generator.h"
 #include <string>
+#include <iostream>
 
 int main(int argc, char** argv){
 
@@ -30,9 +31,12 @@ int main(int argc, char** argv){
     Json::JsonHandler::getInstance()->WriteCard(r,name, "ressources");
     auto c = Json::JsonHandler::getInstance()->ReadCard(name, "ressources");
 
-    qInfo() << c->getName();
 
     Loader::CardDatabase::getInstance();
+
+    for(auto c : Loader::CardDatabase::getInstance()->getCardsRessources()){
+        qInfo() << (int)c->getDomaine() << " | " << "Nom : " << c->getName();
+    }
 
     // QT
 

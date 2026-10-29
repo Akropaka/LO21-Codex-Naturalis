@@ -36,4 +36,10 @@ namespace Utils {
         BottomRight
     };
 
+    enum class CardType {
+        Base,
+        Ressource,
+        Golden,
+        Goal
+    };
 }
