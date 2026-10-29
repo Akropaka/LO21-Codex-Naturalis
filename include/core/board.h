@@ -16,5 +16,7 @@ namespace Core {
         public:
             Board() : cards(QMap<Vector2i, Card>()) {}
             void addCard(Vector2i pos, const Card& card);
+            bool doesCardExist(Vector2i pos);
+            Card& getCard(Vector2i pos);
     };
 }
