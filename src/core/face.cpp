@@ -1,4 +1,5 @@
 #include "face.h"
+#include "card.h"
 
 using namespace Core;
 
@@ -8,6 +9,17 @@ void Face::AddSlot(Utils::SlotPosition sp, Utils::Ressource r) {
         throw "ERROR";
     }
     this->borders[sp] = r;
+}
+
+bool Face::AddNeightboorCard(Utils::SlotPosition sp, const Card& c){
+    if(borders.find(sp) == borders.end()){
+        return false;
+    }
+    if(neightboors.find(sp) != neightboors.end()){
+        return false;
+    }
+    neightboors[sp] = c;
+    return true;
 }
 
 QJsonObject Face::toJson() const {

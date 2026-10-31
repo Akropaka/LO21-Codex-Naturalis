@@ -13,9 +13,14 @@ namespace Core {
 
         Does have borders and may have a score
     */
+
+    class Card;
+
     class Face {
+
         private:
             map<Utils::SlotPosition,Utils::Ressource> borders;
+            map<Utils::SlotPosition,Card> neightboors;
             unsigned int score;
         public:
             Face(){};
@@ -23,6 +28,7 @@ namespace Core {
             const int getScore() const {return score;}
             const map<Utils::SlotPosition,Utils::Ressource>& getBorders() const {return borders;}
             void AddSlot(Utils::SlotPosition sp, Utils::Ressource r);
+            bool AddNeightboorCard(Utils::SlotPosition sp, const Core::Card& c);
             QJsonObject toJson() const;
             static Face fromJson(const QJsonObject &json);
         };
