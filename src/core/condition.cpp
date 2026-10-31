@@ -2,7 +2,7 @@
 
 using namespace Core;
 
-unsigned int ScoreConditionWithObject::getScorePoints(const Player& p){
+unsigned int ScoreConditionWithObject::getScorePoints(const Board& p){
     /*
         TO DO :
             Parcourir le plateau (board) du joueur (player) p, afin de récupérer tous les objets == obj
