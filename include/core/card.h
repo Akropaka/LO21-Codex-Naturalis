@@ -47,14 +47,24 @@ namespace Core {
         protected:
             Domaine domaine;
             Face faces[2];
-            void SetupVerso();
+            Face visible;
+            unsigned int currentVisible;
         public:
             RessourceCard(const QString& n, const Domaine& d, const Face& r) : Card(n), domaine(d) {
                 faces[0] = r;
+                visible = r;
             };
             RessourceCard() : Card() {};
-            const Domaine& getDomaine() const { return domaine;}
+
+            const Domaine& getDomaine() const {return domaine;}
             const Face& getFace(unsigned int i=0) const;
+            void setFace(const Face& f, unsigned int i=0){faces[i]=f;}
+
+            void SetupAutoVerso();
+
+            void Flip();
+            const Face& getVisibleFace(){return visible;}
+
             QJsonObject toJson() const override;
             static RessourceCard fromJson(const QJsonObject &json);
     };

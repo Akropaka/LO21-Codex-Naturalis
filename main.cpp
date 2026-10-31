@@ -35,7 +35,9 @@ int main(int argc, char** argv){
     Loader::CardDatabase::getInstance();
 
     for(auto c : Loader::CardDatabase::getInstance()->getCards(Utils::CardType::Ressource)){
-        auto* ressourceCard = dynamic_cast<Core::RessourceCard*>(c); 
+        auto* ressourceCard = dynamic_cast<Core::RessourceCard*>(c);
+        ressourceCard->SetupAutoVerso();
+        ressourceCard->Flip();
         qInfo() << (int)ressourceCard->getDomaine() << " | " << "Nom : " << ressourceCard->getName();
     }
 

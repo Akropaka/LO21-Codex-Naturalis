@@ -61,6 +61,35 @@ RessourceCard RessourceCard::fromJson(const QJsonObject &json){
     return card;
 }
 
+void Core::RessourceCard::SetupAutoVerso(){
+    Face* f = new Face();
+
+    f->AddSlot(Utils::SlotPosition::TopLeft, Utils::Ressource::Empty);
+    f->AddSlot(Utils::SlotPosition::TopRight, Utils::Ressource::Empty);
+    f->AddSlot(Utils::SlotPosition::BottomLeft, Utils::Ressource::Empty);
+    f->AddSlot(Utils::SlotPosition::BottomRight, Utils::Ressource::Empty);
+    
+    if(domaine == Utils::Domaine::Animal){
+        f->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Animal);
+    }
+    else if(domaine == Utils::Domaine::Champignon){
+        f->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Champignon);
+    }
+    else if(domaine == Utils::Domaine::Insecte){
+        f->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Insecte);
+    }
+    else if(domaine == Utils::Domaine::Insecte){
+        f->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Insecte);
+    }
+
+    faces[1] = *f;
+}
+
+void Core::RessourceCard::Flip(){
+    currentVisible = (currentVisible+1) % 2;
+    visible = faces[currentVisible];
+}
+
 Loader::CardDatabase::CardDatabase(){
     const QString pathRessources = "ressources";
     const QDir directory(QDir(Json::JsonHandler::GetAssetsDirectory())
@@ -90,3 +119,4 @@ vector<Core::Card*> Loader::CardDatabase::getCards(CardType ct) const {
     }
     throw "Erreur";
 }
+
