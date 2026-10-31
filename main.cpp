@@ -39,6 +39,7 @@ int main(int argc, char** argv){
         ressourceCard->SetupAutoVerso();
         ressourceCard->Flip();
         qInfo() << (int)ressourceCard->getDomaine() << " | " << "Nom : " << ressourceCard->getName();
+        qInfo() << "Nombre Ressource Animal : " << ressourceCard->getVisibleFace().getRessourceCount(Utils::Ressource::Animal);
     }
 
     // QT

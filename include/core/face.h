@@ -16,9 +16,11 @@ namespace Core {
 
     class Card;
 
+    class Board;
+
     class Face {
 
-        private:
+        protected:
             map<Utils::SlotPosition,Utils::Ressource> borders;
             map<Utils::SlotPosition,Card> neightboors;
             unsigned int score;
@@ -29,7 +31,21 @@ namespace Core {
             const map<Utils::SlotPosition,Utils::Ressource>& getBorders() const {return borders;}
             void AddSlot(Utils::SlotPosition sp, Utils::Ressource r);
             bool AddNeightboorCard(Utils::SlotPosition sp, const Core::Card& c);
+
+            unsigned int getRessourceCount(Utils::Ressource ressource);
+
             QJsonObject toJson() const;
             static Face fromJson(const QJsonObject &json);
-        };
+    };
+
+    class FaceWithCondition : public Face {
+        private:
+            map<Utils::Ressource,unsigned int> conditions;
+        public:
+            FaceWithCondition() : Face(){};
+            FaceWithCondition(unsigned int s) : Face(s){};
+            void AddCondition(unsigned int quantity, Utils::Ressource ressource);
+            vector<Utils::Ressource> getRessourcesType();
+            bool isPlayable(Board& board);
+    };
 }

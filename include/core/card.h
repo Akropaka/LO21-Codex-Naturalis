@@ -63,7 +63,7 @@ namespace Core {
             void SetupAutoVerso();
 
             void Flip();
-            const Face& getVisibleFace(){return visible;}
+            Face& getVisibleFace(){return visible;}
 
             QJsonObject toJson() const override;
             static RessourceCard fromJson(const QJsonObject &json);

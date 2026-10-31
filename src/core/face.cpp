@@ -1,4 +1,5 @@
 #include "face.h"
+#include "board.h"
 #include "card.h"
 
 using namespace Core;
@@ -20,6 +21,48 @@ bool Face::AddNeightboorCard(Utils::SlotPosition sp, const Card& c){
     }
     neightboors[sp] = c;
     return true;
+}
+
+unsigned int Face::getRessourceCount(Utils::Ressource ressource){
+    unsigned int count = 0;
+    for(auto it = borders.begin(); it != borders.end(); it++){
+        if(neightboors.find(it->first) != neightboors.end()){
+            // Le coin est obstrué, on passe
+        }
+        else if(it->second == ressource){
+            // La ressource correspond
+            count++;
+        }
+    }
+    return count;
+}
+
+void FaceWithCondition::AddCondition(unsigned int quantity, Utils::Ressource ressource){
+    if(quantity<=0){
+        return;
+    }
+    if(conditions.find(ressource) != conditions.end()){
+        return;
+    }
+    conditions[ressource] = quantity;
+}
+
+bool FaceWithCondition::isPlayable(Board& board){
+    for(auto it = conditions.begin(); it != conditions.end(); it++){
+        Utils::Ressource r = it->first;
+        if(board.getRessourceCount(r) < it->second){
+            return false;
+        }
+    }
+    return true;
+}
+
+vector<Utils::Ressource> FaceWithCondition::getRessourcesType(){
+    vector<Utils::Ressource> resources;
+    for(auto it = conditions.begin();it != conditions.end(); it++){
+        resources.push_back(it->first);
+    }
+    return resources;
 }
 
 QJsonObject Face::toJson() const {

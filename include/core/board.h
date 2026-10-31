@@ -10,13 +10,17 @@ namespace Core {
 
         Use of QMap instead of Map while be easier to handle when saving the game
     */
+
+    class Card;
+
     class Board {
         private:
-            QMap<Vector2i, Card> cards;
+            QMap<Utils::Vector2i, Card> cards;
         public:
-            Board() : cards(QMap<Vector2i, Card>()) {}
-            void addCard(Vector2i pos, const Card& card);
-            bool doesCardExist(Vector2i pos);
-            Card& getCard(Vector2i pos);
+            Board() : cards(QMap<Utils::Vector2i, Card>()) {}
+            void addCard(Utils::Vector2i pos, const Card& card);
+            bool doesCardExist(Utils::Vector2i pos);
+            Card& getCard(Utils::Vector2i pos);
+            unsigned int getRessourceCount(Utils::Ressource ressource);
     };
 }
