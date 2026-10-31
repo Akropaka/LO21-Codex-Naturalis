@@ -81,6 +81,12 @@ Loader::CardDatabase* Loader::CardDatabase::getInstance(){
     return instance;
 }
 
-vector<RessourceCard*> Loader::CardDatabase::getCardsRessources() const {
-    return ressourceCards;
+vector<Core::Card*> Loader::CardDatabase::getCards(CardType ct) const {
+    if(ct == Utils::CardType::Base){
+        return baseCards;
+    }
+    else if(ct == Utils::CardType::Ressource){
+        return vector<Core::Card*>(ressourceCards.begin(),ressourceCards.end());
+    }
+    throw "Erreur";
 }

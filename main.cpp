@@ -34,8 +34,9 @@ int main(int argc, char** argv){
 
     Loader::CardDatabase::getInstance();
 
-    for(auto c : Loader::CardDatabase::getInstance()->getCardsRessources()){
-        qInfo() << (int)c->getDomaine() << " | " << "Nom : " << c->getName();
+    for(auto c : Loader::CardDatabase::getInstance()->getCards(Utils::CardType::Ressource)){
+        auto* ressourceCard = dynamic_cast<Core::RessourceCard*>(c); 
+        qInfo() << (int)ressourceCard->getDomaine() << " | " << "Nom : " << ressourceCard->getName();
     }
 
     // QT

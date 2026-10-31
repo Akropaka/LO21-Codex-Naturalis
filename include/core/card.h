@@ -83,7 +83,7 @@ namespace Loader {
             CardDatabase& operator=(const CardDatabase&) = delete;
         public:
             static CardDatabase* getInstance();
-            vector<Core::RessourceCard*> getCardsRessources() const;
+            vector<Core::Card*> getCards(CardType ct) const;
     };
 
 }
