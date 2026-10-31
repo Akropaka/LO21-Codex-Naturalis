@@ -12,7 +12,7 @@ namespace Core {
         \author <Thomas El Haj Hussein>
         \brief A class that represent the face of a Card Ressource and below classes
 
-        Does have borders and may have a score
+        Do have borders and may have a score
     */
 
     class Card;
@@ -34,6 +34,7 @@ namespace Core {
             bool AddNeightboorCard(Utils::SlotPosition sp, const Core::Card& c);
 
             unsigned int getRessourceCount(Utils::Ressource ressource);
+            virtual bool isPlayable(Board& board){return true;};
 
             QJsonObject toJson() const;
             static Face fromJson(const QJsonObject &json);
@@ -46,7 +47,8 @@ namespace Core {
             FaceWithCondition() : Face(){};
             FaceWithCondition(unsigned int s) : Face(s){};
             void AddCondition(unsigned int quantity, Utils::Ressource ressource);
+            void ModifyScoreCondition(const ScoreCondition& sc){scoreCondition = sc;}
             vector<Utils::Ressource> getRessourcesType();
-            bool isPlayable(Board& board);
+            bool isPlayable(Board& board) override;
     };
 }
