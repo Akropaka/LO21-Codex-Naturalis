@@ -51,3 +51,15 @@ void ScoreConditionWithPattern::AddElementToPattern(Utils::Domaine domaine, Util
             Bien penser avec l'itérator à utiliser it->first (key), et it->second (value)
     */
 }
+
+QJsonObject ScoreCondition::toJson() const{
+    QJsonObject json;
+    json["score"] = (int)score;
+
+    return json;
+}
+
+ScoreCondition ScoreCondition::fromJson(const QJsonObject &json){
+    ScoreCondition sc(static_cast<unsigned int>(json["score"].toInt()));
+    return sc;
+}

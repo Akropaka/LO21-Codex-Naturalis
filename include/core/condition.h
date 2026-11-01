@@ -1,5 +1,7 @@
 #pragma once
+#include <map>
 #include "utils.h"
+#include <QJsonObject>
 
 namespace Core{
 
@@ -17,6 +19,9 @@ namespace Core{
             };
             virtual unsigned int getScorePoints() const {return score;}
             virtual unsigned int getScorePoints(const Board& p){return score;}
+
+            virtual QJsonObject toJson() const;
+            static ScoreCondition fromJson(const QJsonObject &json);
     };
 
     class ScoreConditionWithObject : public ScoreCondition {
@@ -37,7 +42,7 @@ namespace Core{
 
     class ScoreConditionWithPattern : public ScoreCondition {
         private:
-            map<Utils::Vector2i,Utils::Domaine> pattern;
+            std::map<Utils::Vector2i,Utils::Domaine> pattern;
         public:
             ScoreConditionWithPattern(unsigned int s) : ScoreCondition(s){};
             unsigned int getScorePoints(const Board& p) override;

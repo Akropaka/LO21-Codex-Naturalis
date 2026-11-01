@@ -66,8 +66,7 @@ vector<Utils::Ressource> FaceWithCondition::getRessourcesType(){
 }
 
 QJsonObject Face::toJson() const {
-    QJsonObject json;
-    json["score"] = static_cast<int>(this->getScore());
+    QJsonObject json = scoreCondition.toJson();
 
     QJsonObject bordersJson;
     
@@ -85,9 +84,7 @@ QJsonObject Face::toJson() const {
 Face Face::fromJson(const QJsonObject& json) {
     Face face;
 
-    if (json.contains("score") && json["score"].isDouble()) {
-        face.scoreCondition = json["score"].toInt();
-    }
+    face.scoreCondition = ScoreCondition::fromJson(json);
 
     const QJsonValue bordersValue = json.value("borders");
     if (bordersValue.isObject()) {
