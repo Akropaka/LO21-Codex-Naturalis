@@ -36,7 +36,7 @@ namespace Core {
             unsigned int getRessourceCount(Utils::Ressource ressource);
             virtual bool isPlayable(Board& board){return true;};
 
-            QJsonObject toJson() const;
+            virtual QJsonObject toJson() const;
             static Face fromJson(const QJsonObject &json);
     };
 
@@ -46,9 +46,16 @@ namespace Core {
         public:
             FaceWithCondition() : Face(){};
             FaceWithCondition(unsigned int s) : Face(s){};
+            FaceWithCondition(Face& f){
+                this->borders = f.getBorders();
+                this->scoreCondition = ScoreCondition(f.getScore());
+            };
             void AddCondition(unsigned int quantity, Utils::Ressource ressource);
             void ModifyScoreCondition(const ScoreCondition& sc){scoreCondition = sc;}
             vector<Utils::Ressource> getRessourcesType();
             bool isPlayable(Board& board) override;
+
+            QJsonObject toJson() const override;
+            static FaceWithCondition fromJson(const QJsonObject &json);
     };
 }

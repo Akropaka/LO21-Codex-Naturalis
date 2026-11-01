@@ -48,7 +48,7 @@ namespace Core {
             Domaine domaine;
             Face faces[2];
             Face visible;
-            unsigned int currentVisible;
+            unsigned int currentVisible = 0;
         public:
             RessourceCard(const QString& n, const Domaine& d, const Face& r) : Card(n), domaine(d) {
                 faces[0] = r;
@@ -70,7 +70,13 @@ namespace Core {
     };
 
     class GoldenCard : public RessourceCard {
-
+        private:
+            FaceWithCondition faceCondition;
+        public:
+            GoldenCard(const QString& n, const Domaine& d, const FaceWithCondition& r) : RessourceCard(n,d,r), faceCondition(r){}
+            GoldenCard() : RessourceCard() {};
+            QJsonObject toJson() const override;
+            static GoldenCard fromJson(const QJsonObject &json);
     };
 }
 
@@ -85,6 +91,7 @@ namespace Loader {
         private:
             vector<Core::Card*> baseCards;
             vector<Core::RessourceCard*> ressourceCards;
+            vector<Core::GoldenCard*> goldenCards;
 
             static CardDatabase* instance;
             CardDatabase();

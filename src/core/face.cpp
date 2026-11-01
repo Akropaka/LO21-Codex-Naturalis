@@ -101,3 +101,36 @@ Face Face::fromJson(const QJsonObject& json) {
     
     return face;
 }
+
+QJsonObject FaceWithCondition::toJson() const {
+    QJsonObject json = Face::toJson();
+
+    QJsonObject conditionsJson;
+
+    for (auto it = conditions.begin(); it != conditions.end(); ++it) {
+        QString keyStr = QString::number(static_cast<int>(it->first)); 
+        int valueInt = static_cast<int>(it->second);
+        conditionsJson.insert(keyStr, valueInt);
+    }
+
+    json["conditions"] = conditionsJson;
+
+    return json;
+}
+
+FaceWithCondition FaceWithCondition::fromJson(const QJsonObject &json){
+    Face face = Face::fromJson(json);
+    FaceWithCondition faceCondition(face);
+    
+    const QJsonValue conditionsValue = json.value("conditions");
+    if (conditionsValue.isObject()) {
+        const QJsonObject bordersJson = conditionsValue.toObject();
+        for (auto it = bordersJson.begin(); it != bordersJson.end(); ++it) {
+            auto quantity = static_cast<unsigned int>(it.value().toInt());
+            auto ressource = static_cast<Utils::Ressource>(it.key().toInt());
+            faceCondition.AddCondition(quantity, ressource);
+        }
+    }
+
+    return faceCondition;
+}
