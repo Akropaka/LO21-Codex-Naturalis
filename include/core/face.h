@@ -49,10 +49,7 @@ namespace Core {
         public:
             FaceWithCondition() : Face(){};
             FaceWithCondition(unsigned int s) : Face(s){};
-            FaceWithCondition(Face& f){
-                this->borders = f.getBorders();
-                this->scoreCondition = std::make_shared<ScoreCondition>(ScoreCondition(f.getScore()));
-            };
+            FaceWithCondition(const Face& f) : Face(f) {};
             void AddCondition(unsigned int quantity, Utils::Ressource ressource);
             template <typename T>
             void ModifyScoreCondition(T sc){scoreCondition = std::make_shared<T>(sc);}

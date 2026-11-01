@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <memory>
 #include "utils.h"
 #include <QJsonObject>
 
@@ -24,7 +25,7 @@ namespace Core{
             virtual unsigned int getScorePoints(const Board& p){return score;}
 
             virtual QJsonObject toJson() const;
-            static ScoreCondition fromJson(const QJsonObject &json);
+            static std::shared_ptr<ScoreCondition> fromJson(const QJsonObject &json);
     };
 
     class ScoreConditionWithObject : public ScoreCondition {
@@ -35,7 +36,7 @@ namespace Core{
             unsigned int getScorePoints(const Board& p) override;
 
             QJsonObject toJson() const override;
-            static ScoreCondition fromJson(const QJsonObject &json);
+            static ScoreConditionWithObject fromJson(const QJsonObject &json);
     };
 
     class ScoreConditionWithMultipleObject : public ScoreConditionWithObject {

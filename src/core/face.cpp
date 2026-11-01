@@ -84,7 +84,7 @@ QJsonObject Face::toJson() const {
 Face Face::fromJson(const QJsonObject& json) {
     Face face;
 
-    face.scoreCondition = std::make_shared<ScoreCondition>(ScoreCondition::fromJson(json));
+    face.scoreCondition = ScoreCondition::fromJson(json);
 
     const QJsonValue bordersValue = json.value("borders");
     if (bordersValue.isObject()) {
