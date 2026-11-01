@@ -3,6 +3,7 @@
 #include "utils.h"
 #include <QJsonObject>
 #include <QJsonArray>
+#include <memory>
 #include "condition.h"
 
 using namespace std;
@@ -24,11 +25,13 @@ namespace Core {
         protected:
             map<Utils::SlotPosition,Utils::Ressource> borders;
             map<Utils::SlotPosition,Card> neightboors;
-            ScoreCondition scoreCondition;
+            std::shared_ptr<ScoreCondition> scoreCondition = std::make_shared<ScoreCondition>(0);
         public:
-            Face() : scoreCondition(0) {};
-            Face(unsigned int s) : scoreCondition(s){};
-            unsigned int getScore() const {return scoreCondition.getScorePoints();}
+            Face() {};
+            Face(unsigned int s){
+                scoreCondition.get()->setScore(s);
+            };
+            unsigned int getScore() const {return scoreCondition.get()->getScorePoints();}
             const map<Utils::SlotPosition,Utils::Ressource>& getBorders() const {return borders;}
             void AddSlot(Utils::SlotPosition sp, Utils::Ressource r);
             bool AddNeightboorCard(Utils::SlotPosition sp, const Core::Card& c);
@@ -48,10 +51,10 @@ namespace Core {
             FaceWithCondition(unsigned int s) : Face(s){};
             FaceWithCondition(Face& f){
                 this->borders = f.getBorders();
-                this->scoreCondition = ScoreCondition(f.getScore());
+                this->scoreCondition = std::make_shared<ScoreCondition>(ScoreCondition(f.getScore()));
             };
             void AddCondition(unsigned int quantity, Utils::Ressource ressource);
-            void ModifyScoreCondition(const ScoreCondition& sc){scoreCondition = sc;}
+            void ModifyScoreCondition(const ScoreCondition& sc){scoreCondition = std::make_shared<ScoreCondition>(sc);}
             vector<Utils::Ressource> getRessourcesType();
             bool isPlayable(Board& board) override;
 

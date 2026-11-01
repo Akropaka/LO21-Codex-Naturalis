@@ -66,7 +66,7 @@ vector<Utils::Ressource> FaceWithCondition::getRessourcesType(){
 }
 
 QJsonObject Face::toJson() const {
-    QJsonObject json = scoreCondition.toJson();
+    QJsonObject json = scoreCondition.get()->toJson();
 
     QJsonObject bordersJson;
     
@@ -84,7 +84,7 @@ QJsonObject Face::toJson() const {
 Face Face::fromJson(const QJsonObject& json) {
     Face face;
 
-    face.scoreCondition = ScoreCondition::fromJson(json);
+    face.scoreCondition = std::make_shared<ScoreCondition>(ScoreCondition::fromJson(json));
 
     const QJsonValue bordersValue = json.value("borders");
     if (bordersValue.isObject()) {

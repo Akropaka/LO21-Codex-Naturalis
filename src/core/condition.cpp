@@ -63,3 +63,18 @@ ScoreCondition ScoreCondition::fromJson(const QJsonObject &json){
     ScoreCondition sc(static_cast<unsigned int>(json["score"].toInt()));
     return sc;
 }
+
+QJsonObject ScoreConditionWithObject::toJson() const{
+    QJsonObject json = ScoreCondition::toJson();
+    json["obj"] = static_cast<int>(obj);
+    return json;
+}
+
+ScoreCondition ScoreConditionWithObject::fromJson(const QJsonObject &json){
+    ScoreConditionWithObject sc(
+        static_cast<unsigned int>(json["score"].toInt()),
+        static_cast<Utils::Ressource>(json["obj"].toInt())
+    );
+
+    return sc;
+}

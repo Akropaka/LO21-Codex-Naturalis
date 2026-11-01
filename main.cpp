@@ -26,6 +26,7 @@ int main(int argc, char** argv){
     f.AddSlot(Utils::SlotPosition::TopRight,Utils::Ressource::Empty);
     
     Core::FaceWithCondition fSecond(3);
+
     fSecond.AddSlot(Utils::SlotPosition::TopLeft,Utils::Ressource::Animal);
     fSecond.AddSlot(Utils::SlotPosition::BottomLeft,Utils::Ressource::Champignon);
     fSecond.AddSlot(Utils::SlotPosition::TopRight,Utils::Ressource::Animal);

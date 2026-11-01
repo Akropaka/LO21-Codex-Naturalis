@@ -17,6 +17,9 @@ namespace Core{
                 this->score = i;
                 return *this;
             };
+
+            void setScore(unsigned int i){score = i;}
+
             virtual unsigned int getScorePoints() const {return score;}
             virtual unsigned int getScorePoints(const Board& p){return score;}
 
@@ -30,6 +33,9 @@ namespace Core{
         public:
             ScoreConditionWithObject(unsigned int s, Utils::Ressource r) : ScoreCondition(s), obj(r) {};
             unsigned int getScorePoints(const Board& p) override;
+
+            QJsonObject toJson() const override;
+            static ScoreCondition fromJson(const QJsonObject &json);
     };
 
     class ScoreConditionWithMultipleObject : public ScoreConditionWithObject {
