@@ -54,7 +54,8 @@ namespace Core {
                 this->scoreCondition = std::make_shared<ScoreCondition>(ScoreCondition(f.getScore()));
             };
             void AddCondition(unsigned int quantity, Utils::Ressource ressource);
-            void ModifyScoreCondition(const ScoreCondition& sc){scoreCondition = std::make_shared<ScoreCondition>(sc);}
+            template <typename T>
+            void ModifyScoreCondition(T sc){scoreCondition = std::make_shared<T>(sc);}
             vector<Utils::Ressource> getRessourcesType();
             bool isPlayable(Board& board) override;
 

@@ -30,7 +30,7 @@ int main(int argc, char** argv){
     fSecond.AddSlot(Utils::SlotPosition::TopLeft,Utils::Ressource::Animal);
     fSecond.AddSlot(Utils::SlotPosition::BottomLeft,Utils::Ressource::Champignon);
     fSecond.AddSlot(Utils::SlotPosition::TopRight,Utils::Ressource::Animal);
-    fSecond.ModifyScoreCondition(Core::ScoreConditionWithObject(2,Utils::Ressource::Feather));
+    fSecond.ModifyScoreCondition<Core::ScoreConditionWithObject>(Core::ScoreConditionWithObject(2,Utils::Ressource::Ink));
     fSecond.AddCondition(3,Utils::Ressource::Animal);
 
     const QString name = "Frog";

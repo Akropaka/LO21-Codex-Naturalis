@@ -10,6 +10,7 @@
         "conditions": {
             "2": 3
         },
+        "obj": 5,
         "score": 2
     },
     "type": "golden"
