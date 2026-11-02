@@ -7,15 +7,31 @@ using namespace Core;
 size_t Core::Card::amount = 0;
 Loader::CardDatabase* Loader::CardDatabase::instance = nullptr;
 
-const Core::Face& Core::RessourceCard::getFace(unsigned int i) const {
+const Face& Core::RessourceCard::getFace(unsigned int i) const {
     if(i>1 || i<0){
         throw "ERROR";
     }
     else{
-        return faces[i];
+        if(i==0){
+            return *recto;
+        }
+        else{
+            return *verso;
+        }
     }
 }
 
+void Core::RessourceCard::setFace(const Face& face, unsigned int i) {
+    auto copy = face.clone();
+
+    if (i == 0) {
+        recto = std::move(copy);
+    } else if (i == 1) {
+        verso = std::move(copy);
+    } else {
+        throw std::out_of_range("Indice de face invalide");
+    }
+}
 QJsonObject Card::toJson() const{
     QJsonObject json;
     json["name"] = name;
@@ -35,7 +51,7 @@ Card Card::fromJson(const QJsonObject &json){
 QJsonObject RessourceCard::toJson() const{
     QJsonObject json = Card::toJson();
     json["domaine"] = static_cast<int>(domaine);
-    json["recto"] = this->getFace(0).toJson();
+    json["recto"] = getFace(0).toJson();
     return json;
 }
 
@@ -55,8 +71,8 @@ RessourceCard RessourceCard::fromJson(const QJsonObject &json){
         faceJson = json.value("face");
     }
     if (faceJson.isObject()) {
-        card.faces[0] = Face::fromJson(faceJson.toObject());
-        card.visible = card.faces[0];
+        card.recto = std::make_shared<Face>(Face::fromJson(faceJson.toObject()));
+        card.visible = card.recto;
     }
     
     return card;
@@ -65,7 +81,7 @@ RessourceCard RessourceCard::fromJson(const QJsonObject &json){
 QJsonObject GoldenCard::toJson() const{
     QJsonObject json = Card::toJson();
     json["domaine"] = static_cast<int>(domaine);
-    json["recto"] = faceCondition.toJson();
+    json["recto"] = getFace(0).toJson();
     return json;
 }
 
@@ -85,41 +101,42 @@ GoldenCard GoldenCard::fromJson(const QJsonObject &json){
         faceJson = json.value("face");
     }
     if (faceJson.isObject()) {
-        card.faces[0] = Face::fromJson(faceJson.toObject());
-        card.faceCondition = FaceWithCondition::fromJson(faceJson.toObject());
-        card.visible = card.faceCondition;
+        card.recto = std::make_shared<FaceWithCondition>(FaceWithCondition::fromJson(faceJson.toObject()));
+        card.visible = card.recto;
     }
     
     return card;
 }
 
 void Core::RessourceCard::SetupAutoVerso(){
-    Face* f = new Face();
+    verso = std::make_shared<Face>();
 
-    f->AddSlot(Utils::SlotPosition::TopLeft, Utils::Ressource::Empty);
-    f->AddSlot(Utils::SlotPosition::TopRight, Utils::Ressource::Empty);
-    f->AddSlot(Utils::SlotPosition::BottomLeft, Utils::Ressource::Empty);
-    f->AddSlot(Utils::SlotPosition::BottomRight, Utils::Ressource::Empty);
+    verso->AddSlot(Utils::SlotPosition::TopLeft, Utils::Ressource::Empty);
+    verso->AddSlot(Utils::SlotPosition::TopRight, Utils::Ressource::Empty);
+    verso->AddSlot(Utils::SlotPosition::BottomLeft, Utils::Ressource::Empty);
+    verso->AddSlot(Utils::SlotPosition::BottomRight, Utils::Ressource::Empty);
     
     if(domaine == Utils::Domaine::Animal){
-        f->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Animal);
+        verso->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Animal);
     }
     else if(domaine == Utils::Domaine::Champignon){
-        f->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Champignon);
+        verso->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Champignon);
     }
     else if(domaine == Utils::Domaine::Insecte){
-        f->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Insecte);
+        verso->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Insecte);
     }
     else if(domaine == Utils::Domaine::Insecte){
-        f->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Insecte);
+        verso->AddSlot(Utils::SlotPosition::Center, Utils::Ressource::Insecte);
     }
-
-    faces[1] = *f;
 }
 
 void Core::RessourceCard::Flip(){
-    currentVisible = (currentVisible+1) % 2;
-    visible = faces[currentVisible];
+    if(visible == recto){
+        visible = verso;
+    }
+    else{
+        visible = recto;
+    }
 }
 
 Loader::CardDatabase::CardDatabase(){

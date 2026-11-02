@@ -41,6 +41,10 @@ namespace Core {
 
             virtual QJsonObject toJson() const;
             static Face fromJson(const QJsonObject &json);
+
+            virtual std::shared_ptr<Face> clone() const {
+                return std::make_shared<Face>(*this);
+            }
     };
 
     class FaceWithCondition : public Face {
@@ -58,5 +62,9 @@ namespace Core {
 
             QJsonObject toJson() const override;
             static FaceWithCondition fromJson(const QJsonObject &json);
-    };
+
+            std::shared_ptr<Face> clone() const override {
+                return std::make_shared<FaceWithCondition>(*this);
+            }
+     };
 }

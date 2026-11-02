@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <QJsonObject>
+#include <memory>
 
 using namespace Utils;
 using namespace std;
@@ -46,34 +47,34 @@ namespace Core {
     class RessourceCard : public Card {
         protected:
             Domaine domaine;
-            Face faces[2];
-            Face visible;
-            unsigned int currentVisible = 0;
+            std::shared_ptr<Face> recto;
+            std::shared_ptr<Face> verso;
+            std::shared_ptr<Face> visible;
         public:
             RessourceCard(const QString& n, const Domaine& d, const Face& r) : Card(n), domaine(d) {
-                faces[0] = r;
-                visible = r;
+                recto = std::make_shared<Face>(r);
+                visible = recto;
             };
             RessourceCard() : Card() {};
 
             const Domaine& getDomaine() const {return domaine;}
             const Face& getFace(unsigned int i=0) const;
-            void setFace(const Face& f, unsigned int i=0){faces[i]=f;}
+            void setFace(const Face& f, unsigned int i=0);
 
             void SetupAutoVerso();
 
             void Flip();
-            Face& getVisibleFace(){return visible;}
+            Face& getVisibleFace(){return *visible;}
 
             QJsonObject toJson() const override;
             static RessourceCard fromJson(const QJsonObject &json);
     };
 
     class GoldenCard : public RessourceCard {
-        private:
-            FaceWithCondition faceCondition;
         public:
-            GoldenCard(const QString& n, const Domaine& d, const FaceWithCondition& r) : RessourceCard(n,d,r), faceCondition(r){}
+            GoldenCard(const QString& n, const Domaine& d, const FaceWithCondition& r) : RessourceCard(n,d,Face()){
+                recto = std::make_shared<FaceWithCondition>(r);
+            }
             GoldenCard() : RessourceCard() {};
             QJsonObject toJson() const override;
             static GoldenCard fromJson(const QJsonObject &json);
