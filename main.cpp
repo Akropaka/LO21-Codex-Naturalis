@@ -68,7 +68,7 @@ int main(int argc, char** argv){
     // Pile
 
     Core::Pile p(Utils::CardType::Ressource);
-    qInfo() <<  p.getCount() << p.PickCard().getName() << p.getCount() << p.ShowTopCard().getName() << p.getCount();
+    qInfo() <<  p.getCount() << p.PickCard().get()->getName() << p.getCount() << p.ShowTopCard().getName() << p.getCount();
 
     // QT
 

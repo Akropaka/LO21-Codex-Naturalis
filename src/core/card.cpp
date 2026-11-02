@@ -213,8 +213,8 @@ Core::Pile::Pile(CardType ct){
     }
 }
 
-Card& Pile::PickCard(){
-    Card& c = *(cards.back()).get();
+std::unique_ptr<Card> Pile::PickCard(){
+    auto c = std::move(cards.back());
     cards.pop_back();
     return c;
 }

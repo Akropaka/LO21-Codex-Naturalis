@@ -111,7 +111,7 @@ namespace Core {
             std::vector<std::unique_ptr<Card>> cards;
         public:
             Pile(CardType ct);
-            Card& PickCard();
+            std::unique_ptr<Card> PickCard();
             Card& ShowTopCard();
             unsigned int getCount();
     };
