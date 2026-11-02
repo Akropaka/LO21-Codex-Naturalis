@@ -46,6 +46,9 @@ void JsonHandler::WriteCard(const Core::Card& c, const QString& name, const QStr
     else if(dynamic_cast<const Core::RessourceCard*>(&c)){
         json["type"] = "ressource";
     }
+    else if(dynamic_cast<const Core::ObjectiveCard*>(&c)){
+        json["type"] = "objective";
+    }
     else{
         json["type"] = "card";
     }
@@ -61,6 +64,7 @@ Core::Card* JsonHandler::ReadCard(const QString& name, const QString& pile) {
     const QJsonObject json = document.object();
     const QString type = json.value("type").toString("card");
 
+    if (type == "objective") return new Core::ObjectiveCard(Core::ObjectiveCard::fromJson(json));
     if (type == "golden") return new Core::GoldenCard(Core::GoldenCard::fromJson(json));
     if (type == "ressource") return new Core::RessourceCard(Core::RessourceCard::fromJson(json));
     if (type == "card") return new Core::Card(Core::Card::fromJson(json));

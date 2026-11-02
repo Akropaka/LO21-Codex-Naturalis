@@ -108,6 +108,17 @@ GoldenCard GoldenCard::fromJson(const QJsonObject &json){
     return card;
 }
 
+QJsonObject ObjectiveCard::toJson() const{
+    QJsonObject json = Card::toJson();
+    json["objective"] = scoreCondition->toJson();
+    return json;
+}
+ObjectiveCard ObjectiveCard::fromJson(const QJsonObject &json){
+    // Maybe need to clone here ?
+    ObjectiveCard card(json["name"].toString(),*ScoreCondition::fromJson(json["objective"].toObject()).get());
+    return card;
+}
+
 void Core::RessourceCard::SetupAutoVerso(){
     verso = std::make_shared<Face>();
 

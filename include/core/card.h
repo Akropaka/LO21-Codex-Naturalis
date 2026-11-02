@@ -84,11 +84,14 @@ namespace Core {
         private:
             std::shared_ptr<ScoreCondition> scoreCondition;
         public:
-            ObjectiveCard(const ScoreCondition& sc){
+            ObjectiveCard(const QString& n, const ScoreCondition& sc) : Card(n) {
                 scoreCondition = sc.clone();
             }
 
             unsigned int getScore() const {return scoreCondition.get()->getScorePoints();}
+
+            QJsonObject toJson() const override;
+            static ObjectiveCard fromJson(const QJsonObject &json);
     };
 }
 

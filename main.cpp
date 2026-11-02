@@ -35,14 +35,18 @@ int main(int argc, char** argv){
 
     const QString name = "Frog";
     const QString nameSecond = "Vipere";
+    const QString nameObjective = "Determination";
 
     Core::RessourceCard r(name,Utils::Domaine::Animal,f);
     Core::GoldenCard rg(nameSecond,Utils::Domaine::Animal,fSecond);
+    Core::ObjectiveCard robj(nameObjective,Core::ScoreConditionWithObject(3,Utils::Ressource::Animal));
     
     Json::JsonHandler::getInstance()->WriteCard(r,name, "ressources");
     Json::JsonHandler::getInstance()->WriteCard(rg,nameSecond, "doree");
+    Json::JsonHandler::getInstance()->WriteCard(robj,nameObjective, "objectives");
     auto c = Json::JsonHandler::getInstance()->ReadCard(name, "ressources");
     auto cSecond = Json::JsonHandler::getInstance()->ReadCard(nameSecond, "doree");
+    auto cObjectif = Json::JsonHandler::getInstance()->ReadCard(nameObjective, "objectives");
 
     Loader::CardDatabase::getInstance();
 
