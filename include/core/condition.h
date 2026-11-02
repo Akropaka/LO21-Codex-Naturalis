@@ -26,6 +26,10 @@ namespace Core{
 
             virtual QJsonObject toJson() const;
             static std::shared_ptr<ScoreCondition> fromJson(const QJsonObject &json);
+
+            virtual std::shared_ptr<ScoreCondition> clone() const {
+                return std::make_shared<ScoreCondition>(*this);
+            }
     };
 
     class ScoreConditionWithObject : public ScoreCondition {
@@ -37,6 +41,10 @@ namespace Core{
 
             QJsonObject toJson() const override;
             static ScoreConditionWithObject fromJson(const QJsonObject &json);
+
+            std::shared_ptr<ScoreCondition> clone() const override {
+                return std::make_shared<ScoreConditionWithObject>(*this);
+            }
     };
 
     class ScoreConditionWithMultipleObject : public ScoreConditionWithObject {
@@ -45,6 +53,10 @@ namespace Core{
         public:
             ScoreConditionWithMultipleObject(unsigned int s, Utils::Ressource r, unsigned int n) : ScoreConditionWithObject(s,r), number(n){};
             unsigned int getScorePoints(const Board& p) override;
+
+            std::shared_ptr<ScoreCondition> clone() const override {
+                return std::make_shared<ScoreConditionWithMultipleObject>(*this);
+            }
         };
 
     class ScoreConditionWithPattern : public ScoreCondition {
@@ -54,6 +66,10 @@ namespace Core{
             ScoreConditionWithPattern(unsigned int s) : ScoreCondition(s){};
             unsigned int getScorePoints(const Board& p) override;
             void AddElementToPattern(Utils::Domaine domaine, Utils::Vector2i relativePosition);
+
+            std::shared_ptr<ScoreCondition> clone() const override {
+                return std::make_shared<ScoreConditionWithPattern>(*this);
+            }
     };
 
     class ScoreConditionWithBorder : public ScoreCondition {
@@ -63,5 +79,9 @@ namespace Core{
             ScoreConditionWithBorder(unsigned int s) : ScoreCondition(s){futurePosition = {0,0};};
             unsigned int getScorePoints(const Board& p) override;
             void setFuturePosition(Utils::Vector2i pos){futurePosition = pos;}
+
+            std::shared_ptr<ScoreCondition> clone() const override {
+                return std::make_shared<ScoreConditionWithBorder>(*this);
+            }
     };
 }

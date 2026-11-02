@@ -79,6 +79,17 @@ namespace Core {
             QJsonObject toJson() const override;
             static GoldenCard fromJson(const QJsonObject &json);
     };
+
+    class ObjectiveCard : public Card {
+        private:
+            std::shared_ptr<ScoreCondition> scoreCondition;
+        public:
+            ObjectiveCard(const ScoreCondition& sc){
+                scoreCondition = sc.clone();
+            }
+
+            unsigned int getScore() const {return scoreCondition.get()->getScorePoints();}
+    };
 }
 
 namespace Loader {

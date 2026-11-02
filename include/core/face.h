@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <memory>
+#include <utility>
 #include "condition.h"
 
 using namespace std;
@@ -56,7 +57,7 @@ namespace Core {
             FaceWithCondition(const Face& f) : Face(f) {};
             void AddCondition(unsigned int quantity, Utils::Ressource ressource);
             template <typename T>
-            void ModifyScoreCondition(T sc){scoreCondition = std::make_shared<T>(sc);}
+            void ModifyScoreCondition(T sc){scoreCondition = std::make_shared<T>(std::move(sc));}
             vector<Utils::Ressource> getRessourcesType();
             bool isPlayable(Board& board) override;
 
