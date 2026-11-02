@@ -112,6 +112,7 @@ namespace Core {
         public:
             Pile(CardType ct);
             std::unique_ptr<Card> PickCard();
+            void removeCardByName(QString name);
             Card& ShowTopCard();
             unsigned int getCount();
     };

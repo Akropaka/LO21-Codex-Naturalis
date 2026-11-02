@@ -70,6 +70,8 @@ int main(int argc, char** argv){
     Core::Pile p(Utils::CardType::Ressource);
     qInfo() <<  p.getCount() << p.PickCard().get()->getName() << p.getCount() << p.ShowTopCard().getName() << p.getCount();
 
+    p.removeCardByName("Wolf");
+    qInfo() << p.getCount();
     // QT
 
     QApplication app(argc, argv);

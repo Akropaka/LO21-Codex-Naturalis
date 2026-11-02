@@ -226,3 +226,14 @@ Card& Pile::ShowTopCard(){
 unsigned int Pile::getCount(){
     return cards.size();
 }
+
+void Pile::removeCardByName(QString name){
+    auto search = cards.end();
+    for(auto it = cards.begin(); it != cards.end(); it++)
+    {
+        if(it->get()->getName() == name){
+            search = it;
+        }
+    }
+    cards.erase(search);
+}
