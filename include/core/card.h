@@ -113,6 +113,7 @@ namespace Core {
             Pile(CardType ct);
             Card& PickCard();
             Card& ShowTopCard();
+            unsigned int getCount();
     };
 }
 

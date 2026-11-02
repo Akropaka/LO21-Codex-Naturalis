@@ -222,3 +222,7 @@ Card& Pile::PickCard(){
 Card& Pile::ShowTopCard(){
     return *(cards.back()).get();
 }
+
+unsigned int Pile::getCount(){
+    return cards.size();
+}
