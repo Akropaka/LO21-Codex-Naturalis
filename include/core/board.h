@@ -1,6 +1,7 @@
 #pragma once
 #include "utils.h"
 #include <QMap>
+#include <QList>
 #include "card.h"
 
 namespace Core {
@@ -16,9 +17,11 @@ namespace Core {
     class Board {
         private:
             QMap<Utils::Vector2i, Card> cards;
+            QList<ObjectiveCard> secretObjectives;
         public:
             Board() : cards(QMap<Utils::Vector2i, Card>()) {}
             void addCard(Utils::Vector2i pos, const Card& card);
+            void addObjectiveCard(const ObjectiveCard& card);
             bool doesCardExist(Utils::Vector2i pos);
             Card& getCard(Utils::Vector2i pos);
             unsigned int getRessourceCount(Utils::Ressource ressource);

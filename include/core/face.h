@@ -20,9 +20,15 @@ namespace Core {
     class Card;
 
     class Board;
+    /*! \class Face
+        \author <Thomas El Haj Hussein>
+        \brief A class that represent one face
 
+        \param borders a map that bind corner with a ressource type such as Animal, Empty...
+        \param neightboors a map that bind corner with a Card that has been placed in that corner
+        \param scoreCondition a smart pointer that descripe how to win points when placing the card with this face
+    */
     class Face {
-
         protected:
             map<Utils::SlotPosition,Utils::Ressource> borders;
             map<Utils::SlotPosition,Card> neightboors;
@@ -47,7 +53,12 @@ namespace Core {
                 return std::make_shared<Face>(*this);
             }
     };
+    /*! \class FaceWithCondition
+        \author <Thomas El Haj Hussein>
+        \brief A class that represent a face with conditions that require to be met to be placed
 
+        \param conditions the conditions in ressource needed to be placed
+    */
     class FaceWithCondition : public Face {
         private:
             map<Utils::Ressource,unsigned int> conditions;

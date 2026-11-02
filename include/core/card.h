@@ -42,7 +42,9 @@ namespace Core {
         \brief A specialized Card class that represent a Card from the Ressource pile
         
         \param domaine a domaine linked to the card.
-        \param faces a table of [2] entries that represent both faces.
+        \param recto represent the recto face.
+        \param verso represent the verso face.
+        \param visible represent the current visible face.
     */
     class RessourceCard : public Card {
         protected:
@@ -69,7 +71,12 @@ namespace Core {
             QJsonObject toJson() const override;
             static RessourceCard fromJson(const QJsonObject &json);
     };
-
+    /*! \class GoldenCard
+        \author <Thomas El Haj Hussein>
+        \brief A specialized Card class that represent a Card from the Golden Pile
+        
+        It replace the verso Face with a FaceWithCondition instance using smart pointer
+    */
     class GoldenCard : public RessourceCard {
         public:
             GoldenCard(const QString& n, const Domaine& d, const FaceWithCondition& r) : RessourceCard(n,d,Face()){
@@ -79,7 +86,12 @@ namespace Core {
             QJsonObject toJson() const override;
             static GoldenCard fromJson(const QJsonObject &json);
     };
-
+    /*! \class ObjectiveCard
+        \author <Thomas El Haj Hussein>
+        \brief A specialized Card class that represent a Card from the ObjectiveCard
+        
+        \param scoreCondition a member that represent how to score points
+    */
     class ObjectiveCard : public Card {
         private:
             std::shared_ptr<ScoreCondition> scoreCondition;
