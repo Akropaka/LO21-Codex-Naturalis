@@ -33,7 +33,7 @@ namespace Core {
                 amount += 1;
             }
             const QString& getName() const {return name;}
-            ~Card() = default;
+            virtual ~Card() = default;
             virtual QJsonObject toJson() const;
             static Card fromJson(const QJsonObject &json);
     };
@@ -104,6 +104,15 @@ namespace Core {
 
             QJsonObject toJson() const override;
             static ObjectiveCard fromJson(const QJsonObject &json);
+    };
+    
+    class Pile{
+        private:
+            std::vector<std::unique_ptr<Card>> cards;
+        public:
+            Pile(CardType ct);
+            Card& PickCard();
+            Card& ShowTopCard();
     };
 }
 

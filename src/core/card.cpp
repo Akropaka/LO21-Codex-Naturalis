@@ -192,3 +192,33 @@ vector<Core::Card*> Loader::CardDatabase::getCards(CardType ct) const {
     throw "Erreur";
 }
 
+Core::Pile::Pile(CardType ct){
+    auto sourceCards = Loader::CardDatabase::getInstance()->getCards(ct);
+
+    for(const Core::Card* card : sourceCards){
+        if(ct == Utils::CardType::Base){
+            cards.push_back(std::make_unique<Card>(*card));
+        }
+        else if(ct == Utils::CardType::Ressource){
+            const auto* resourceCard = dynamic_cast<const RessourceCard*>(card);
+            cards.push_back(std::make_unique<RessourceCard>(*resourceCard));
+        }
+        else if(ct == Utils::CardType::Golden){
+            const auto* goldenCard = dynamic_cast<const GoldenCard*>(card);
+            cards.push_back(std::make_unique<GoldenCard>(*goldenCard));
+        }
+        else{
+            throw "Erreur";
+        }
+    }
+}
+
+Card& Pile::PickCard(){
+    Card& c = *(cards.back()).get();
+    cards.pop_back();
+    return c;
+}
+
+Card& Pile::ShowTopCard(){
+    return *(cards.back()).get();
+}

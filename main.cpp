@@ -65,6 +65,11 @@ int main(int argc, char** argv){
         qInfo() << "Nombre Ressource Animal : " << goldenCard->getVisibleFace().getRessourceCount(Utils::Ressource::Animal);
     }
 
+    // Pile
+
+    Core::Pile p(Utils::CardType::Ressource);
+    qInfo() << p.PickCard().getName() << p.ShowTopCard().getName();
+
     // QT
 
     QApplication app(argc, argv);
