@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <QJsonObject>
+#include <memory>
 
 using namespace Utils;
 using namespace std;
@@ -32,7 +33,7 @@ namespace Core {
                 amount += 1;
             }
             const QString& getName() const {return name;}
-            ~Card() = default;
+            virtual ~Card() = default;
             virtual QJsonObject toJson() const;
             static Card fromJson(const QJsonObject &json);
     };
@@ -41,26 +42,79 @@ namespace Core {
         \brief A specialized Card class that represent a Card from the Ressource pile
         
         \param domaine a domaine linked to the card.
-        \param faces a table of [2] entries that represent both faces.
+        \param recto represent the recto face.
+        \param verso represent the verso face.
+        \param visible represent the current visible face.
     */
     class RessourceCard : public Card {
         protected:
             Domaine domaine;
-            Face faces[2];
-            void SetupVerso();
+            std::shared_ptr<Face> recto;
+            std::shared_ptr<Face> verso;
+            std::shared_ptr<Face> visible;
         public:
             RessourceCard(const QString& n, const Domaine& d, const Face& r) : Card(n), domaine(d) {
-                faces[0] = r;
+                recto = std::make_shared<Face>(r);
+                visible = recto;
             };
             RessourceCard() : Card() {};
-            const Domaine& getDomaine() const { return domaine;}
+
+            const Domaine& getDomaine() const {return domaine;}
             const Face& getFace(unsigned int i=0) const;
+            void setFace(const Face& f, unsigned int i=0);
+
+            void SetupAutoVerso();
+
+            void Flip();
+            Face& getVisibleFace(){return *visible;}
+
             QJsonObject toJson() const override;
             static RessourceCard fromJson(const QJsonObject &json);
     };
-
+    /*! \class GoldenCard
+        \author <Thomas El Haj Hussein>
+        \brief A specialized Card class that represent a Card from the Golden Pile
+        
+        It replace the verso Face with a FaceWithCondition instance using smart pointer
+    */
     class GoldenCard : public RessourceCard {
+        public:
+            GoldenCard(const QString& n, const Domaine& d, const FaceWithCondition& r) : RessourceCard(n,d,Face()){
+                recto = std::make_shared<FaceWithCondition>(r);
+            }
+            GoldenCard() : RessourceCard() {};
+            QJsonObject toJson() const override;
+            static GoldenCard fromJson(const QJsonObject &json);
+    };
+    /*! \class ObjectiveCard
+        \author <Thomas El Haj Hussein>
+        \brief A specialized Card class that represent a Card from the ObjectiveCard
+        
+        \param scoreCondition a member that represent how to score points
+    */
+    class ObjectiveCard : public Card {
+        private:
+            std::shared_ptr<ScoreCondition> scoreCondition;
+        public:
+            ObjectiveCard(const QString& n, const ScoreCondition& sc) : Card(n) {
+                scoreCondition = sc.clone();
+            }
 
+            unsigned int getScore() const {return scoreCondition.get()->getScorePoints();}
+
+            QJsonObject toJson() const override;
+            static ObjectiveCard fromJson(const QJsonObject &json);
+    };
+    
+    class Pile{
+        private:
+            std::vector<std::unique_ptr<Card>> cards;
+        public:
+            Pile(CardType ct);
+            std::unique_ptr<Card> PickCard();
+            void removeCardByName(QString name);
+            Card& ShowTopCard();
+            unsigned int getCount();
     };
 }
 
@@ -75,6 +129,7 @@ namespace Loader {
         private:
             vector<Core::Card*> baseCards;
             vector<Core::RessourceCard*> ressourceCards;
+            vector<Core::GoldenCard*> goldenCards;
 
             static CardDatabase* instance;
             CardDatabase();
@@ -83,7 +138,7 @@ namespace Loader {
             CardDatabase& operator=(const CardDatabase&) = delete;
         public:
             static CardDatabase* getInstance();
-            vector<Core::RessourceCard*> getCardsRessources() const;
+            vector<Core::Card*> getCards(CardType ct) const;
     };
 
 }

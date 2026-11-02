@@ -1,0 +1,87 @@
+#pragma once
+#include <map>
+#include <memory>
+#include "utils.h"
+#include <QJsonObject>
+
+namespace Core{
+
+    class Board;
+
+    class ScoreCondition{
+        protected:
+            unsigned int score;
+        public:
+            virtual ~ScoreCondition(){};
+            ScoreCondition(unsigned int s) : score(s) {};
+            ScoreCondition& operator=(unsigned int i){
+                this->score = i;
+                return *this;
+            };
+
+            void setScore(unsigned int i){score = i;}
+
+            virtual unsigned int getScorePoints() const {return score;}
+            virtual unsigned int getScorePoints(const Board& p){return score;}
+
+            virtual QJsonObject toJson() const;
+            static std::shared_ptr<ScoreCondition> fromJson(const QJsonObject &json);
+
+            virtual std::shared_ptr<ScoreCondition> clone() const {
+                return std::make_shared<ScoreCondition>(*this);
+            }
+    };
+
+    class ScoreConditionWithObject : public ScoreCondition {
+        private:
+            Utils::Ressource obj;
+        public:
+            ScoreConditionWithObject(unsigned int s, Utils::Ressource r) : ScoreCondition(s), obj(r) {};
+            unsigned int getScorePoints(const Board& p) override;
+
+            QJsonObject toJson() const override;
+            static ScoreConditionWithObject fromJson(const QJsonObject &json);
+
+            std::shared_ptr<ScoreCondition> clone() const override {
+                return std::make_shared<ScoreConditionWithObject>(*this);
+            }
+    };
+
+    class ScoreConditionWithMultipleObject : public ScoreConditionWithObject {
+        private:
+            unsigned int number;
+        public:
+            ScoreConditionWithMultipleObject(unsigned int s, Utils::Ressource r, unsigned int n) : ScoreConditionWithObject(s,r), number(n){};
+            unsigned int getScorePoints(const Board& p) override;
+
+            std::shared_ptr<ScoreCondition> clone() const override {
+                return std::make_shared<ScoreConditionWithMultipleObject>(*this);
+            }
+        };
+
+    class ScoreConditionWithPattern : public ScoreCondition {
+        private:
+            std::map<Utils::Vector2i,Utils::Domaine> pattern;
+        public:
+            ScoreConditionWithPattern(unsigned int s) : ScoreCondition(s){};
+            unsigned int getScorePoints(const Board& p) override;
+            void AddElementToPattern(Utils::Domaine domaine, Utils::Vector2i relativePosition);
+
+            std::shared_ptr<ScoreCondition> clone() const override {
+                return std::make_shared<ScoreConditionWithPattern>(*this);
+            }
+    };
+
+    class ScoreConditionWithBorder : public ScoreCondition {
+        private:
+            Utils::Vector2i futurePosition;
+        public:
+            ScoreConditionWithBorder(unsigned int s) : ScoreCondition(s){futurePosition = {0,0};};
+            unsigned int getScorePoints(const Board& p) override;
+            void setFuturePosition(Utils::Vector2i pos){futurePosition = pos;}
+
+            std::shared_ptr<ScoreCondition> clone() const override {
+                return std::make_shared<ScoreConditionWithBorder>(*this);
+            }
+    };
+}

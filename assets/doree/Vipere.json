@@ -1,0 +1,17 @@
+{
+    "domaine": 1,
+    "name": "Vipere",
+    "recto": {
+        "borders": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+        },
+        "conditions": {
+            "2": 3
+        },
+        "obj": 5,
+        "score": 2
+    },
+    "type": "golden"
+}
