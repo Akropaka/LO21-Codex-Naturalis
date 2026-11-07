@@ -101,9 +101,9 @@ void ConsoleViewer::printBoard(const Core::Player& player) {
 }
 
 void ConsoleViewer::clearScreen() {
-#ifdef _WIN32
-    system("cls");
-#else
+#ifdef __linux__
     system("clear");
+#else
+    system("cls");
 #endif
 }
