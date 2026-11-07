@@ -16,5 +16,9 @@ namespace Core {
             Player(const string& n) : name(n), score(0) {}
             void setBoard(const Board& b){board = b;}
             void addScore(unsigned int s){score += s;}
+            const string& getName() const { return name; }
+            unsigned int getScore() const { return score; }
+            const vector<Card>& getHand() const { return hand; }
+            void addCardToHand(const Card& c) { hand.push_back(c); }
     };
 }

@@ -8,6 +8,7 @@
 #include "condition.h"
 #include <string>
 #include <iostream>
+#include "consoleViewer.h"
 
 int main(int argc, char** argv){
 
@@ -72,6 +73,16 @@ int main(int argc, char** argv){
 
     p.removeCardByName("Wolf");
     qInfo() << p.getCount();
+
+
+    auto& vue = View::ConsoleViewer::getInstance();
+    Core::Player joueur("Bea");
+    joueur.addCardToHand(Core::Card("Frog"));
+    joueur.addCardToHand(Core::Card("Wolf"));
+    joueur.addCardToHand(Core::Card("Vipere"));
+    vue.printHand(joueur);
+    vue.showScore(joueur);
+
     // QT
 
     QApplication app(argc, argv);
@@ -82,4 +93,6 @@ int main(int argc, char** argv){
     window.show();
 
     return app.exec();
+
+
 }
