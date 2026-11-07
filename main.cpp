@@ -75,6 +75,9 @@ int main(int argc, char** argv){
     qInfo() << p.getCount();
 
 
+
+	//tests console viewer
+
     auto& vue = View::ConsoleViewer::getInstance();
     Core::Player joueur("Bea");
     joueur.addCardToHand(Core::Card("Frog"));
@@ -82,6 +85,13 @@ int main(int argc, char** argv){
     joueur.addCardToHand(Core::Card("Vipere"));
     vue.printHand(joueur);
     vue.showScore(joueur);
+
+    std::vector<const Core::RessourceCard*> cartes;
+    for (auto* c : Loader::CardDatabase::getInstance()->getCards(Utils::CardType::Ressource)) {
+        if (auto* r = dynamic_cast<Core::RessourceCard*>(c))
+            cartes.push_back(r);
+    }
+    vue.printCards(cartes);
 
     // QT
 

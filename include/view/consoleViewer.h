@@ -19,6 +19,8 @@ namespace View {
         void printHand(const Core::Player& player);           // Main d'un joueur
         void printBoard(const Core::Player& player);          // Plateau d'un joueur
         void showScore(const Core::Player& player);           // Score d'un joueur
+        void printCards(const std::vector<const Core::RessourceCard*>& cards);  // Cartes aff en ligne
+        void clearScreen();
 
     private:
         ConsoleViewer() = default;
