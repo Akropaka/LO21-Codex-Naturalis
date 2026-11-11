@@ -88,7 +88,7 @@ void ConsoleViewer::printHand(const Core::Player& player) {
         return;
     }
     for (size_t i = 0; i < hand.size(); i++) {
-        std::cout << "  [" << i + 1 << "] " << hand[i].getName().toStdString() << "\n";
+        std::cout << "  [" << i + 1 << "] " << hand[i]->getName().toStdString() << "\n";
     }
 }
 

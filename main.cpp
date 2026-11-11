@@ -83,6 +83,8 @@ int main(int argc, char** argv){
     joueur.addCardToHand(Core::Card("Frog"));
     joueur.addCardToHand(Core::Card("Wolf"));
     joueur.addCardToHand(Core::Card("Vipere"));
+    joueur.removeCardFromHand("Vipere");
+    joueur.removeCardFromHand("Lion"); // test avec une carte qui n'existe pas
     vue.printHand(joueur);
     vue.showScore(joueur);
 
