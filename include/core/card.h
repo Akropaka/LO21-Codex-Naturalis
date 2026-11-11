@@ -130,6 +130,7 @@ namespace Loader {
             vector<Core::Card*> baseCards;
             vector<Core::RessourceCard*> ressourceCards;
             vector<Core::GoldenCard*> goldenCards;
+            vector<Core::ObjectiveCard*> objectiveCards;
 
             static CardDatabase* instance;
             CardDatabase();

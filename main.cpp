@@ -8,7 +8,6 @@
 #include "condition.h"
 #include <string>
 #include <iostream>
-using namespace std;
 
 int main(int argc, char** argv){
 
@@ -67,13 +66,27 @@ int main(int argc, char** argv){
         qInfo() << "Nombre Ressource Animal : " << goldenCard->getVisibleFace().getRessourceCount(Utils::Ressource::Animal);
     }
 
-    // Pile
+    Core::Game game;
 
-    Core::Pile p(Utils::CardType::Ressource);
-    qInfo() <<  p.getCount() << p.PickCard().get()->getName() << p.getCount() << p.ShowTopCard().getName() << p.getCount();
+	//tests console viewer
 
-    p.removeCardByName("Wolf");
-    qInfo() << p.getCount();
+    auto& vue = View::ConsoleViewer::getInstance();
+    Core::Player joueur("Bea");
+    joueur.addCardToHand(Core::Card("Frog"));
+    joueur.addCardToHand(Core::Card("Wolf"));
+    joueur.addCardToHand(Core::Card("Vipere"));
+    joueur.removeCardFromHand("Vipere");
+    joueur.removeCardFromHand("Lion"); // test avec une carte qui n'existe pas
+    vue.printHand(joueur);
+    vue.showScore(joueur);
+
+    std::vector<const Core::RessourceCard*> cartes;
+    for (auto* c : Loader::CardDatabase::getInstance()->getCards(Utils::CardType::Ressource)) {
+        if (auto* r = dynamic_cast<Core::RessourceCard*>(c))
+            cartes.push_back(r);
+    }
+    vue.printCards(cartes);
+
     // QT
 
     QApplication app(argc, argv);
@@ -84,4 +97,6 @@ int main(int argc, char** argv){
     window.show();
 
     return app.exec();
+
+
 }

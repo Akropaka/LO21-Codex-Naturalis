@@ -168,6 +168,15 @@ Loader::CardDatabase::CardDatabase(){
         auto card = Json::JsonHandler::getInstance()->ReadCard(name, pathGolden);
         goldenCards.push_back(static_cast<Core::GoldenCard*>(card));
     }
+
+    const QString pathObjectives = "objectives";
+    const QDir directoryObjectives(QDir(Json::JsonHandler::GetAssetsDirectory())
+        .filePath(pathObjectives));
+    for (const QFileInfo& file : directoryObjectives.entryInfoList({"*.json"}, QDir::Files)) {
+        const QString name = file.completeBaseName();
+        auto card = Json::JsonHandler::getInstance()->ReadCard(name, pathObjectives);
+        objectiveCards.push_back(static_cast<Core::ObjectiveCard*>(card));
+    }
 }
 
 Loader::CardDatabase* Loader::CardDatabase::getInstance(){
@@ -189,6 +198,9 @@ vector<Core::Card*> Loader::CardDatabase::getCards(CardType ct) const {
     else if(ct == Utils::CardType::Golden){
         return vector<Core::Card*>(goldenCards.begin(),goldenCards.end());
     }
+    else if(ct == Utils::CardType::Goal){
+        return vector<Core::Card*>(objectiveCards.begin(),objectiveCards.end());
+    }
     throw "Erreur";
 }
 
@@ -206,6 +218,10 @@ Core::Pile::Pile(CardType ct){
         else if(ct == Utils::CardType::Golden){
             const auto* goldenCard = dynamic_cast<const GoldenCard*>(card);
             cards.push_back(std::make_unique<GoldenCard>(*goldenCard));
+        }
+        else if(ct == Utils::CardType::Goal){
+            const auto* objectiveCard = dynamic_cast<const ObjectiveCard*>(card);
+            cards.push_back(std::make_unique<ObjectiveCard>(*objectiveCard));
         }
         else{
             throw "Erreur";
@@ -235,5 +251,7 @@ void Pile::removeCardByName(QString name){
             search = it;
         }
     }
-    cards.erase(search);
+    if(search != cards.end()){
+        cards.erase(search);
+    }
 }

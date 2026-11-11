@@ -4,17 +4,25 @@
 #include "player.h"
 
 namespace View {
-    
-    class Viewer {
-        //
-    };
 
-    class ConsoleViewer : public Viewer {
-        public:
-            static void printCard(const Core::Card& card); // Surchage pour la Carte de base
-            static void printCard(const Core::RessourceCard& card); // Surcharge pour la Carte ressource
-            static void printHand(const Core::Player& player); // Main d'un joueur
-            static void printBoard(const Core::Player& player); // Plateau d'un joueur
-            static void showScore(const Core::Player& player); // Afficher le score d'un joueur
+    class ConsoleViewer {
+    public:
+        static ConsoleViewer& getInstance() {
+            static ConsoleViewer instance;
+            return instance;
+        }
+        ConsoleViewer(const ConsoleViewer&) = delete;
+        ConsoleViewer& operator=(const ConsoleViewer&) = delete;
+
+        void printCard(const Core::Card& card);               // Carte
+        void printCard(const Core::RessourceCard& card);      // Carte ressource
+        void printHand(const Core::Player& player);           // Main d'un joueur
+        void printBoard(const Core::Player& player);          // Plateau d'un joueur
+        void showScore(const Core::Player& player);           // Score d'un joueur
+        void printCards(const std::vector<const Core::RessourceCard*>& cards);  // Cartes aff en ligne
+        void clearScreen();
+
+    private:
+        ConsoleViewer() = default;
     };
 }
