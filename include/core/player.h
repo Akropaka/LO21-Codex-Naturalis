@@ -9,7 +9,7 @@ namespace Core {
 
     class Player {
         private:
-            vector<std::unique_ptr<Card>> hand;
+            vector<std::shared_ptr<Card>> hand;
             ObjectiveCard* secretObjective;
             Board board;
             unsigned int score;
@@ -20,8 +20,8 @@ namespace Core {
             void addScore(unsigned int s){score += s;}
             const string& getName() const { return name; }
             unsigned int getScore() const { return score; }
-            const vector<std::unique_ptr<Card>>& getHand() const { return hand; }
-            void addCardToHand(const Card& c) { hand.push_back(std::make_unique<Card>(c));}
+            const vector<std::shared_ptr<Card>>& getHand() const { return hand; }
+            void addCardToHand(const Card& c) { hand.push_back(std::make_shared<Card>(c));}
             void removeCardFromHand(const string& name);
             void setSecretObjective(ObjectiveCard& oc);
             ObjectiveCard& getSecretObjective(){return *secretObjective;}

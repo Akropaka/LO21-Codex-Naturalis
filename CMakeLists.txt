@@ -21,7 +21,8 @@ src/view/consoleViewer.cpp
 src/tools/generator.cpp
 src/utils/json.cpp
 src/core/player.cpp
-src/core/condition.cpp)
+src/core/condition.cpp
+src/core/game.cpp)
 
 target_link_libraries(ProjectLO21-A26 PRIVATE Qt6::Widgets)
 

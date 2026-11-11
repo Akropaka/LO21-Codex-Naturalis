@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include "consoleViewer.h"
+#include "game.h"
 
 int main(int argc, char** argv){
 
@@ -66,15 +67,7 @@ int main(int argc, char** argv){
         qInfo() << "Nombre Ressource Animal : " << goldenCard->getVisibleFace().getRessourceCount(Utils::Ressource::Animal);
     }
 
-    // Pile
-
-    Core::Pile p(Utils::CardType::Ressource);
-    qInfo() <<  p.getCount() << p.PickCard().get()->getName() << p.getCount() << p.ShowTopCard().getName() << p.getCount();
-
-    p.removeCardByName("Wolf");
-    qInfo() << p.getCount();
-
-
+    Core::Game game;
 
 	//tests console viewer
 
