@@ -1,0 +1,8 @@
+{
+    "name": "Illumination",
+    "objective": {
+        "obj": 7,
+        "score": 2
+    },
+    "type": "objective"
+}

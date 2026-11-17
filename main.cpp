@@ -6,6 +6,8 @@
 #include "json.h"
 #include "generator.h"
 #include "condition.h"
+#include "game.h"
+#include "consoleViewer.h"
 #include <string>
 #include <iostream>
 

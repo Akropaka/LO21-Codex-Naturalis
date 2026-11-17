@@ -96,7 +96,6 @@ Tools::CardGenerator::CardGenerator(){
                         int score = 0;
                         cout << "\nFor each ressource on the board, how many score does the card give?";
                         cout << "\nScore (in int) : ";
-                        cin >> score;
 
                         while (!(cin >> score)){
                             // Valeur invalide
