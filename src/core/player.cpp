@@ -30,3 +30,8 @@ void Player::drawCardFromPile(Pile& p){
     auto card = p.PickCard();
     addCardToHand(*card);
 }
+
+void Player::playCardToBoard(RessourceCard& c, Vector2i pos){
+    board.addCard(pos,*(c.clone()));
+    this->removeCardFromHand(c.getName().toStdString());
+}

@@ -78,7 +78,8 @@ int main(int argc, char** argv){
     game.givePoints(joueur,4);
     joueur.addCardToHand(r);
     joueur.addCardToHand(rg);
-    joueur.removeCardFromHand("Vipere");
+    //joueur.removeCardFromHand("Vipere");
+    joueur.playCardToBoard(r, {0,0}); // Joue la carte en (0,0)
     joueur.removeCardFromHand("Lion"); // test avec une carte qui n'existe pas
     vue.printHand(joueur);
     vue.showScore(game.getPlayer(joueur)); // Ou getPlayer("Bea")
