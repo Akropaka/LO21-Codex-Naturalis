@@ -10,6 +10,7 @@ void Player::removeCardFromHand(const string& name){
         }
     }
     if(toRemove != hand.end()){
+        delete *toRemove;
         hand.erase(toRemove);
     }
     else{

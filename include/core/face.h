@@ -35,6 +35,7 @@ namespace Core {
             std::shared_ptr<ScoreCondition> scoreCondition = std::make_shared<ScoreCondition>(0);
         public:
             Face() {};
+            virtual ~Face() = default;
             Face(unsigned int s){
                 scoreCondition.get()->setScore(s);
             };
@@ -49,8 +50,8 @@ namespace Core {
             virtual QJsonObject toJson() const;
             static Face fromJson(const QJsonObject &json);
 
-            virtual std::shared_ptr<Face> clone() const {
-                return std::make_shared<Face>(*this);
+            virtual std::unique_ptr<Face> clone() const {
+                return std::make_unique<Face>(*this);
             }
     };
     /*! \class FaceWithCondition
@@ -75,8 +76,8 @@ namespace Core {
             QJsonObject toJson() const override;
             static FaceWithCondition fromJson(const QJsonObject &json);
 
-            std::shared_ptr<Face> clone() const override {
-                return std::make_shared<FaceWithCondition>(*this);
+            std::unique_ptr<Face> clone() const override {
+                return std::make_unique<FaceWithCondition>(*this);
             }
      };
 }

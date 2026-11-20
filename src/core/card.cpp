@@ -61,8 +61,7 @@ RessourceCard RessourceCard::fromJson(const QJsonObject &json){
         faceJson = json.value("face");
     }
     if (faceJson.isObject()) {
-        card.recto = std::make_shared<Face>(Face::fromJson(faceJson.toObject()));
-        card.visible = card.recto;
+        card.recto = std::make_unique<Face>(Face::fromJson(faceJson.toObject()));
     }
     
     return card;
@@ -91,8 +90,7 @@ GoldenCard GoldenCard::fromJson(const QJsonObject &json){
         faceJson = json.value("face");
     }
     if (faceJson.isObject()) {
-        card.recto = std::make_shared<FaceWithCondition>(FaceWithCondition::fromJson(faceJson.toObject()));
-        card.visible = card.recto;
+        card.recto = std::make_unique<FaceWithCondition>(FaceWithCondition::fromJson(faceJson.toObject()));
     }
     
     return card;
@@ -110,7 +108,7 @@ ObjectiveCard ObjectiveCard::fromJson(const QJsonObject &json){
 }
 
 void Core::RessourceCard::SetupAutoVerso(){
-    verso = std::make_shared<Face>();
+    verso = std::make_unique<Face>();
 
     verso->AddSlot(Utils::SlotPosition::TopLeft, Utils::Ressource::Empty);
     verso->AddSlot(Utils::SlotPosition::TopRight, Utils::Ressource::Empty);
@@ -132,12 +130,15 @@ void Core::RessourceCard::SetupAutoVerso(){
 }
 
 void Core::RessourceCard::Flip(){
-    if(visible == recto){
-        visible = verso;
+    rectoVisible = !rectoVisible;
+}
+
+Face& Core::RessourceCard::getVisibleFace() {
+    auto& face = rectoVisible ? recto : verso;
+    if (!face) {
+        throw std::logic_error("Face visible non initialisée");
     }
-    else{
-        visible = recto;
-    }
+    return *face;
 }
 
 Loader::CardDatabase::CardDatabase(){
@@ -179,10 +180,7 @@ Loader::CardDatabase* Loader::CardDatabase::getInstance(){
 }
 
 vector<Core::Card*> Loader::CardDatabase::getCards(CardType ct) const {
-    if(ct == Utils::CardType::Base){
-        return baseCards;
-    }
-    else if(ct == Utils::CardType::Ressource){
+    if(ct == Utils::CardType::Ressource){
         return vector<Core::Card*>(ressourceCards.begin(),ressourceCards.end());
     }
     else if(ct == Utils::CardType::Golden){

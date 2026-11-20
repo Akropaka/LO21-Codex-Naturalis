@@ -49,15 +49,25 @@ namespace Core {
     class RessourceCard : public Card {
         protected:
             Domaine domaine;
-            std::shared_ptr<Face> recto;
-            std::shared_ptr<Face> verso;
-            std::shared_ptr<Face> visible;
+            std::unique_ptr<Face> recto;
+            std::unique_ptr<Face> verso;
+            bool rectoVisible = true;
         public:
             RessourceCard(const QString& n, const Domaine& d, const Face& r) : Card(n), domaine(d) {
-                recto = std::make_shared<Face>(r);
-                visible = recto;
+                recto = r.clone();
+                SetupAutoVerso();
             };
+            RessourceCard(const QString& n, const Domaine& d, const Face& r, const Face& v) : Card(n), domaine(d) {
+                recto = r.clone();
+                verso = v.clone();
+            }
+
             RessourceCard() : Card() {};
+            RessourceCard(const RessourceCard& other)
+                : Card(other), domaine(other.domaine),
+                  recto(other.recto ? other.recto->clone() : nullptr),
+                  verso(other.verso ? other.verso->clone() : nullptr),
+                  rectoVisible(other.rectoVisible) {}
 
             const Domaine& getDomaine() const {return domaine;}
             const Face& getFace(unsigned int i=0) const;
@@ -66,7 +76,7 @@ namespace Core {
             void SetupAutoVerso();
 
             void Flip();
-            Face& getVisibleFace(){return *visible;}
+            Face& getVisibleFace();
 
             RessourceCard* clone() const override {return new RessourceCard(*this);}
 
@@ -82,8 +92,7 @@ namespace Core {
     class GoldenCard : public RessourceCard {
         public:
             GoldenCard(const QString& n, const Domaine& d, const FaceWithCondition& r) : RessourceCard(n,d,Face()){
-                recto = std::make_shared<FaceWithCondition>(r);
-                visible = recto;
+                recto = std::make_unique<FaceWithCondition>(r);
             }
             GoldenCard() : RessourceCard() {};
 
@@ -135,7 +144,6 @@ namespace Loader {
     */
     class CardDatabase {
         private:
-            vector<Core::Card*> baseCards;
             vector<Core::RessourceCard*> ressourceCards;
             vector<Core::GoldenCard*> goldenCards;
             vector<Core::ObjectiveCard*> objectiveCards;
