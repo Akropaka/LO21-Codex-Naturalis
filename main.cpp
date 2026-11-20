@@ -74,12 +74,14 @@ int main(int argc, char** argv){
 
     auto& vue = View::ConsoleViewer::getInstance();
     Core::Player joueur("Bea");
+    game.addPlayer(joueur);
+    game.givePoints(joueur,4);
     joueur.addCardToHand(r);
     joueur.addCardToHand(rg);
     joueur.removeCardFromHand("Vipere");
     joueur.removeCardFromHand("Lion"); // test avec une carte qui n'existe pas
     vue.printHand(joueur);
-    vue.showScore(joueur);
+    vue.showScore(game.getPlayer(joueur)); // Ou getPlayer("Bea")
 
     std::vector<const Core::RessourceCard*> cartes;
     for (auto* c : Loader::CardDatabase::getInstance()->getCards(Utils::CardType::Ressource)) {
