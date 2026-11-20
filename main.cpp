@@ -69,7 +69,6 @@ int main(int argc, char** argv){
     }
 
     Core::Game game;
-    Core::Shop shop;
 
 	//tests console viewer
 

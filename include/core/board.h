@@ -30,7 +30,9 @@ namespace Core {
         private:
             RessourceCard* cardsRessource[2];
             GoldenCard* cardsGolden[2];
+            Pile& ressources;
+            Pile& golden;
         public:
-            Shop() {};
+            Shop(Pile& r,Pile& g) : ressources(r), golden(g) {};
     };
 }
