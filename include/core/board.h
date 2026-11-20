@@ -8,7 +8,7 @@ namespace Core {
         \author None
         \brief A class that represent the board of a Player
 
-        Use of QMap instead of Map while be easier to handle when saving the game
+        Use of map, QMap cast to save it
     */
 
     class Card;
@@ -24,5 +24,13 @@ namespace Core {
             bool doesCardExist(Utils::Vector2i pos);
             Card& getCard(Utils::Vector2i pos);
             unsigned int getRessourceCount(Utils::Ressource ressource);
+    };
+
+    class Shop {
+        private:
+            RessourceCard* cardsRessource[2];
+            GoldenCard* cardsGolden[2];
+        public:
+            Shop() {};
     };
 }
