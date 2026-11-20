@@ -8,6 +8,10 @@ namespace Utils {
     struct Vector2i {
         int x;
         int y;
+
+        bool operator<(const Vector2i& other) const {
+            return x < other.x || (x == other.x && y < other.y);
+        }
     };
 
     enum class Domaine {
