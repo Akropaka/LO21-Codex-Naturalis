@@ -5,7 +5,7 @@ using namespace Core;
 void Player::removeCardFromHand(const string& name){
     auto toRemove = hand.end();
     for(auto it = this->hand.begin(); it != hand.end(); it++){
-        if(it->get()->getName().toStdString() == name){
+        if((*it)->getName().toStdString() == name){
             toRemove = it;
         }
     }

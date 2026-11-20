@@ -35,7 +35,7 @@ namespace Core {
             const QString& getName() const {return name;}
             virtual ~Card() = default;
             virtual QJsonObject toJson() const;
-            static Card fromJson(const QJsonObject &json);
+            virtual Card* clone() const =0;
     };
     /*! \class RessourceCard
         \author <Thomas El Haj Hussein>
@@ -68,6 +68,8 @@ namespace Core {
             void Flip();
             Face& getVisibleFace(){return *visible;}
 
+            RessourceCard* clone() const override {return new RessourceCard(*this);}
+
             QJsonObject toJson() const override;
             static RessourceCard fromJson(const QJsonObject &json);
     };
@@ -83,6 +85,9 @@ namespace Core {
                 recto = std::make_shared<FaceWithCondition>(r);
             }
             GoldenCard() : RessourceCard() {};
+
+            GoldenCard* clone() const override {return new GoldenCard(*this);}
+
             QJsonObject toJson() const override;
             static GoldenCard fromJson(const QJsonObject &json);
     };
@@ -101,6 +106,8 @@ namespace Core {
             }
 
             unsigned int getScore() const {return scoreCondition.get()->getScorePoints();}
+
+            ObjectiveCard* clone() const override {return new ObjectiveCard(*this);}
 
             QJsonObject toJson() const override;
             static ObjectiveCard fromJson(const QJsonObject &json);

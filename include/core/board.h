@@ -16,10 +16,10 @@ namespace Core {
 
     class Board {
         private:
-            QMap<Utils::Vector2i, Card> cards;
+            QMap<Utils::Vector2i, RessourceCard*> cards;
             QList<ObjectiveCard> secretObjectives;
         public:
-            Board() : cards(QMap<Utils::Vector2i, Card>()) {}
+            Board() : cards(QMap<Utils::Vector2i, RessourceCard*>()) {}
             void addCard(Utils::Vector2i pos, const Card& card);
             void addObjectiveCard(const ObjectiveCard& card);
             bool doesCardExist(Utils::Vector2i pos);

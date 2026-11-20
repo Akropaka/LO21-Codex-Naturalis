@@ -31,7 +31,7 @@ namespace Core {
     class Face {
         protected:
             map<Utils::SlotPosition,Utils::Ressource> borders;
-            map<Utils::SlotPosition,Card> neightboors;
+            vector<Utils::SlotPosition> neightboors;
             std::shared_ptr<ScoreCondition> scoreCondition = std::make_shared<ScoreCondition>(0);
         public:
             Face() {};
@@ -41,7 +41,7 @@ namespace Core {
             unsigned int getScore() const {return scoreCondition.get()->getScorePoints();}
             const map<Utils::SlotPosition,Utils::Ressource>& getBorders() const {return borders;}
             void AddSlot(Utils::SlotPosition sp, Utils::Ressource r);
-            bool AddNeightboorCard(Utils::SlotPosition sp, const Core::Card& c);
+            bool AddNeightboorCard(Utils::SlotPosition sp);
 
             unsigned int getRessourceCount(Utils::Ressource ressource);
             virtual bool isPlayable(Board& board){return true;};

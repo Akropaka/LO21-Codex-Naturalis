@@ -74,9 +74,8 @@ int main(int argc, char** argv){
 
     auto& vue = View::ConsoleViewer::getInstance();
     Core::Player joueur("Bea");
-    joueur.addCardToHand(Core::Card("Frog"));
-    joueur.addCardToHand(Core::Card("Wolf"));
-    joueur.addCardToHand(Core::Card("Vipere"));
+    joueur.addCardToHand(r);
+    joueur.addCardToHand(rg);
     joueur.removeCardFromHand("Vipere");
     joueur.removeCardFromHand("Lion"); // test avec une carte qui n'existe pas
     vue.printHand(joueur);

@@ -12,26 +12,27 @@ void Face::AddSlot(Utils::SlotPosition sp, Utils::Ressource r) {
     this->borders[sp] = r;
 }
 
-bool Face::AddNeightboorCard(Utils::SlotPosition sp, const Card& c){
+bool Face::AddNeightboorCard(Utils::SlotPosition sp){
     if(borders.find(sp) == borders.end()){
         return false;
     }
-    if(neightboors.find(sp) != neightboors.end()){
-        return false;
+    for(auto it = neightboors.begin(); it != neightboors.end(); it++)
+    {
+        if((*it) == sp){
+            return false;
+        }
     }
-    neightboors[sp] = c;
+    neightboors.push_back(sp);
     return true;
 }
 
 unsigned int Face::getRessourceCount(Utils::Ressource ressource){
     unsigned int count = 0;
     for(auto it = borders.begin(); it != borders.end(); it++){
-        if(neightboors.find(it->first) != neightboors.end()){
-            // Le coin est obstrué, on passe
-        }
-        else if(it->second == ressource){
-            // La ressource correspond
-            count++;
+        bool occupied = std::find(neightboors.begin(), neightboors.end(),
+                          it->first) != neightboors.end();
+        if (!occupied && it->second == ressource) {
+            ++count;
         }
     }
     return count;

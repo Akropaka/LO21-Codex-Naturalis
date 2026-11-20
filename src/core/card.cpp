@@ -38,16 +38,6 @@ QJsonObject Card::toJson() const{
     return json;
 }
 
-Card Card::fromJson(const QJsonObject &json){
-    Card card;
-
-    if(json.contains("name") && json["name"].isString()){
-        card.name = json["name"].toString();
-    }
-    
-    return card;
-}
-
 QJsonObject RessourceCard::toJson() const{
     QJsonObject json = Card::toJson();
     json["domaine"] = static_cast<int>(domaine);
@@ -208,10 +198,7 @@ Core::Pile::Pile(CardType ct){
     auto sourceCards = Loader::CardDatabase::getInstance()->getCards(ct);
 
     for(const Core::Card* card : sourceCards){
-        if(ct == Utils::CardType::Base){
-            cards.push_back(std::make_unique<Card>(*card));
-        }
-        else if(ct == Utils::CardType::Ressource){
+        if(ct == Utils::CardType::Ressource){
             const auto* resourceCard = dynamic_cast<const RessourceCard*>(card);
             cards.push_back(std::make_unique<RessourceCard>(*resourceCard));
         }
