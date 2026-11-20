@@ -22,6 +22,7 @@ namespace Core {
             unsigned int getScore() const { return score; }
             const vector<Card*>& getHand() const { return hand; }
             void addCardToHand(const Card& c) { hand.push_back(c.clone());}
+            void drawCardFromPile(Pile& p);
             void removeCardFromHand(const string& name);
             void setSecretObjective(ObjectiveCard& oc);
             ObjectiveCard& getSecretObjective(){return *secretObjective;}

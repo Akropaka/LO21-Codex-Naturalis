@@ -21,3 +21,12 @@ void Player::removeCardFromHand(const string& name){
 void Player::setSecretObjective(ObjectiveCard& oc){
     this->secretObjective = &oc;
 }
+
+void Player::drawCardFromPile(Pile& p){
+    if (p.getCount() == 0) {
+        throw "Pile vide";
+    }
+
+    auto card = p.PickCard();
+    addCardToHand(*card);
+}
