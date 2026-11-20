@@ -27,5 +27,6 @@ namespace Core {
             void removeCardFromHand(const string& name);
             void setSecretObjective(ObjectiveCard& oc);
             ObjectiveCard& getSecretObjective(){return *secretObjective;}
+            bool operator==(const Player& other);
     };
 }

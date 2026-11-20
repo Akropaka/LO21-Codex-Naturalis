@@ -35,3 +35,12 @@ void Player::playCardToBoard(RessourceCard& c, Vector2i pos){
     board.addCard(pos,*(c.clone()));
     this->removeCardFromHand(c.getName().toStdString());
 }
+
+bool Player::operator==(const Player& other){
+    if(this->getName() == other.getName()){
+        return true;
+    }
+    else{
+        return false;
+    }
+}

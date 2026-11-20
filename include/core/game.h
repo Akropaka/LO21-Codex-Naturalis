@@ -15,11 +15,14 @@ namespace Core {
         Pile objectivePile;
         Shop shop;
         vector<Player> players;
+        Player* playing;
         public:
-            Game() : ressourcePile(Pile(CardType::Ressource)), goldenPile(Pile(CardType::Golden)), objectivePile(Pile(CardType::Goal)), shop(ressourcePile,goldenPile) {}
+            Game() : playing(nullptr), ressourcePile(Pile(CardType::Ressource)), goldenPile(Pile(CardType::Golden)), objectivePile(Pile(CardType::Goal)), shop(ressourcePile,goldenPile) {}
             void addPlayer(const Player& p) {players.push_back(p);}
             Player& getPlayer(const string& name);
             Player& getPlayer(const Player& player);
+            Player& getCurrentPlayibgPlayer(){return *playing;}
             void givePoints(Player& p, int points);
+            void nextTurn();
         };
 }

@@ -28,3 +28,18 @@ void Game::givePoints(Player& p, int points){
         }
     }
 }
+
+void Game::nextTurn(){
+    for(auto it = players.begin(); it != players.end(); it++){
+        if((*it) == *playing){
+            it++;
+            if(it == players.end()){
+                playing = &*(players.begin());
+            }
+            else{
+                playing = &*it;
+            }
+            return;
+        }
+    }
+}
