@@ -83,6 +83,7 @@ namespace Core {
         public:
             GoldenCard(const QString& n, const Domaine& d, const FaceWithCondition& r) : RessourceCard(n,d,Face()){
                 recto = std::make_shared<FaceWithCondition>(r);
+                visible = recto;
             }
             GoldenCard() : RessourceCard() {};
 
