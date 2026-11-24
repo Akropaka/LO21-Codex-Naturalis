@@ -23,6 +23,7 @@ namespace Core {
             void addObjectiveCard(ObjectiveCard& card);
             bool doesCardExist(Utils::Vector2i pos);
             Card& getCard(Utils::Vector2i pos);
+            map<Utils::Vector2i, RessourceCard*>& getCards(){return cards;}
             unsigned int getRessourceCount(Utils::Ressource ressource);
     };
 

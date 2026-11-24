@@ -22,7 +22,7 @@ namespace Core{
             void setScore(unsigned int i){score = i;}
 
             virtual unsigned int getScorePoints() const {return score;}
-            virtual unsigned int getScorePoints(const Board& p){return score;}
+            virtual unsigned int getScorePoints(Board& p){return score;}
 
             virtual QJsonObject toJson() const;
             static std::shared_ptr<ScoreCondition> fromJson(const QJsonObject &json);
@@ -33,11 +33,11 @@ namespace Core{
     };
 
     class ScoreConditionWithObject : public ScoreCondition {
-        private:
+        protected:
             Utils::Ressource obj;
         public:
             ScoreConditionWithObject(unsigned int s, Utils::Ressource r) : ScoreCondition(s), obj(r) {};
-            unsigned int getScorePoints(const Board& p) override;
+            unsigned int getScorePoints(Board& p) override;
 
             QJsonObject toJson() const override;
             static ScoreConditionWithObject fromJson(const QJsonObject &json);
@@ -52,7 +52,7 @@ namespace Core{
             unsigned int number;
         public:
             ScoreConditionWithMultipleObject(unsigned int s, Utils::Ressource r, unsigned int n) : ScoreConditionWithObject(s,r), number(n){};
-            unsigned int getScorePoints(const Board& p) override;
+            unsigned int getScorePoints(Board& p) override;
 
             QJsonObject toJson() const override;
             static ScoreConditionWithMultipleObject fromJson(const QJsonObject &json);
@@ -67,7 +67,7 @@ namespace Core{
             std::map<Utils::Vector2i,Utils::Domaine> pattern;
         public:
             ScoreConditionWithPattern(unsigned int s) : ScoreCondition(s){};
-            unsigned int getScorePoints(const Board& p) override;
+            unsigned int getScorePoints(Board& p) override;
             void AddElementToPattern(Utils::Domaine domaine, Utils::Vector2i relativePosition);
 
             QJsonObject toJson() const override;
@@ -83,7 +83,7 @@ namespace Core{
             Utils::Vector2i futurePosition;
         public:
             ScoreConditionWithBorder(unsigned int s) : ScoreCondition(s){futurePosition = {0,0};};
-            unsigned int getScorePoints(const Board& p) override;
+            unsigned int getScorePoints(Board& p) override;
             void setFuturePosition(Utils::Vector2i pos){futurePosition = pos;}
 
             QJsonObject toJson() const override;

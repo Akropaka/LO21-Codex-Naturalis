@@ -1,17 +1,18 @@
 #include "condition.h"
+#include "board.h"
 
 using namespace Core;
 
-unsigned int ScoreConditionWithObject::getScorePoints(const Board& p){
+unsigned int ScoreConditionWithObject::getScorePoints(Board& p){
     /*
         TO DO :
             Parcourir le plateau (board) du joueur (player) p, afin de récupérer tous les objets == obj
             Retourner score * nbrObjet
     */
-    return score;
+    return score * p.getRessourceCount(obj);
 }
 
-unsigned int ScoreConditionWithMultipleObject::getScorePoints(const Board& p){
+unsigned int ScoreConditionWithMultipleObject::getScorePoints(Board& p){
     /*
         TO DO :
             Parcourir le plateau (board) du joueur (player) p, afin de récupérer tous les objets
@@ -19,20 +20,23 @@ unsigned int ScoreConditionWithMultipleObject::getScorePoints(const Board& p){
             de cet objet nécessaire à l'obtention de ces points
             Retourner score * (nbrObjet / number)
     */
-    return score;
+    unsigned int nbr = p.getRessourceCount(obj) / number;
+    return score * nbr;
 }
 
-unsigned int ScoreConditionWithPattern::getScorePoints(const Board& p){
+unsigned int ScoreConditionWithPattern::getScorePoints(Board& p){
     /*
         TO DO :
             Rappel un pattern est une disposition de carte de couleur(domaine) et de position particulière
             Parcourir le plateau (board) du joueur (player) p, afin de regarder si le pattern de pose existe
             Retourner score * nbrPattern
     */
+    
+
     return score;
 }
 
-unsigned int ScoreConditionWithBorder::getScorePoints(const Board& p){
+unsigned int ScoreConditionWithBorder::getScorePoints(Board& p){
     /*
         TO DO :
             IMPORTANT VERIFIER SI LA POS EST POSSIBLE
@@ -41,7 +45,25 @@ unsigned int ScoreConditionWithBorder::getScorePoints(const Board& p){
 
             Retourner score * nbrCoinOffusquer lors de la pose (donc les Neightboors)
     */
-    return score;
+    unsigned int total = 0;
+
+    if(p.doesCardExist({futurePosition.x + 1, futurePosition.y + 1})){
+        total++;
+    }
+
+    if(p.doesCardExist({futurePosition.x - 1, futurePosition.y - 1})){
+        total++;
+    }
+
+    if(p.doesCardExist({futurePosition.x + 1, futurePosition.y - 1})){
+        total++;
+    }
+
+    if(p.doesCardExist({futurePosition.x - 1, futurePosition.y + 1})){
+        total++;
+    }
+    
+    return score * total;
 }
 
 void ScoreConditionWithPattern::AddElementToPattern(Utils::Domaine domaine, Utils::Vector2i relativePosition){
