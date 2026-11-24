@@ -61,6 +61,9 @@ QJsonObject ScoreCondition::toJson() const{
 
 std::shared_ptr<ScoreCondition> ScoreCondition::fromJson(const QJsonObject &json){
     // Check if contains obj, in that case it's a ScoreConditionObject
+    if(json.contains("pattern")){
+        return std::make_shared<ScoreConditionWithPattern>(ScoreConditionWithPattern::fromJson(json));
+    }
     if(json.contains("quantity")){
         return std::make_shared<ScoreConditionWithMultipleObject>(ScoreConditionWithMultipleObject::fromJson(json));
     }
