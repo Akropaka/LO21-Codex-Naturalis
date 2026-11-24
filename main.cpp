@@ -33,11 +33,11 @@ int main(int argc, char** argv){
     fSecond.AddSlot(Utils::SlotPosition::TopLeft,Utils::Ressource::Animal);
     fSecond.AddSlot(Utils::SlotPosition::BottomLeft,Utils::Ressource::Champignon);
     fSecond.AddSlot(Utils::SlotPosition::TopRight,Utils::Ressource::Animal);
-    fSecond.ModifyScoreCondition<Core::ScoreConditionWithObject>(Core::ScoreConditionWithObject(2,Utils::Ressource::Ink));
+    fSecond.ModifyScoreCondition<Core::ScoreConditionWithBorder>(Core::ScoreConditionWithBorder(2));
     fSecond.AddCondition(3,Utils::Ressource::Animal);
 
     const QString name = "Frog";
-    const QString nameSecond = "Vipere";
+    const QString nameSecond = "Bear";
     const QString nameObjective = "Determination";
 
     Core::RessourceCard r(name,Utils::Domaine::Animal,f);

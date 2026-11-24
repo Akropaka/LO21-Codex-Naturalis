@@ -54,6 +54,9 @@ namespace Core{
             ScoreConditionWithMultipleObject(unsigned int s, Utils::Ressource r, unsigned int n) : ScoreConditionWithObject(s,r), number(n){};
             unsigned int getScorePoints(const Board& p) override;
 
+            //QJsonObject toJson() const override;
+            //static ScoreConditionWithMultipleObject fromJson(const QJsonObject &json);
+
             std::shared_ptr<ScoreCondition> clone() const override {
                 return std::make_shared<ScoreConditionWithMultipleObject>(*this);
             }
@@ -67,6 +70,9 @@ namespace Core{
             unsigned int getScorePoints(const Board& p) override;
             void AddElementToPattern(Utils::Domaine domaine, Utils::Vector2i relativePosition);
 
+            //QJsonObject toJson() const override;
+            //static ScoreConditionWithPattern fromJson(const QJsonObject &json);
+
             std::shared_ptr<ScoreCondition> clone() const override {
                 return std::make_shared<ScoreConditionWithPattern>(*this);
             }
@@ -79,6 +85,9 @@ namespace Core{
             ScoreConditionWithBorder(unsigned int s) : ScoreCondition(s){futurePosition = {0,0};};
             unsigned int getScorePoints(const Board& p) override;
             void setFuturePosition(Utils::Vector2i pos){futurePosition = pos;}
+
+            QJsonObject toJson() const override;
+            static ScoreConditionWithBorder fromJson(const QJsonObject &json);
 
             std::shared_ptr<ScoreCondition> clone() const override {
                 return std::make_shared<ScoreConditionWithBorder>(*this);

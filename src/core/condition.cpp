@@ -64,6 +64,9 @@ std::shared_ptr<ScoreCondition> ScoreCondition::fromJson(const QJsonObject &json
     if (json.contains("obj")) {
         return std::make_shared<ScoreConditionWithObject>(ScoreConditionWithObject::fromJson(json));
     }
+    if(json.contains("onBorder")){
+        return std::make_shared<ScoreConditionWithBorder>(ScoreConditionWithBorder::fromJson(json));
+    }
 
     return std::make_shared<ScoreCondition>(
         static_cast<unsigned int>(json["score"].toInt())
@@ -83,4 +86,20 @@ ScoreConditionWithObject ScoreConditionWithObject::fromJson(const QJsonObject &j
     );
 
     return sc;
+}
+
+QJsonObject ScoreConditionWithBorder::toJson() const {
+    QJsonObject json = ScoreCondition::toJson();
+    json["onBorder"] = true;
+    return json;
+}
+
+ScoreConditionWithBorder ScoreConditionWithBorder::fromJson(const QJsonObject &json){
+    if(json["onBorder"].toBool()){
+        ScoreConditionWithBorder sc(
+            static_cast<unsigned int>(json["score"].toInt())
+        );
+        return sc;
+    }
+    throw "Error";
 }
