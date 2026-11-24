@@ -54,8 +54,8 @@ namespace Core{
             ScoreConditionWithMultipleObject(unsigned int s, Utils::Ressource r, unsigned int n) : ScoreConditionWithObject(s,r), number(n){};
             unsigned int getScorePoints(const Board& p) override;
 
-            //QJsonObject toJson() const override;
-            //static ScoreConditionWithMultipleObject fromJson(const QJsonObject &json);
+            QJsonObject toJson() const override;
+            static ScoreConditionWithMultipleObject fromJson(const QJsonObject &json);
 
             std::shared_ptr<ScoreCondition> clone() const override {
                 return std::make_shared<ScoreConditionWithMultipleObject>(*this);

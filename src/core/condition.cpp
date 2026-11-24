@@ -61,6 +61,9 @@ QJsonObject ScoreCondition::toJson() const{
 
 std::shared_ptr<ScoreCondition> ScoreCondition::fromJson(const QJsonObject &json){
     // Check if contains obj, in that case it's a ScoreConditionObject
+    if(json.contains("quantity")){
+        return std::make_shared<ScoreConditionWithMultipleObject>(ScoreConditionWithMultipleObject::fromJson(json));
+    }
     if (json.contains("obj")) {
         return std::make_shared<ScoreConditionWithObject>(ScoreConditionWithObject::fromJson(json));
     }
@@ -83,6 +86,22 @@ ScoreConditionWithObject ScoreConditionWithObject::fromJson(const QJsonObject &j
     ScoreConditionWithObject sc(
         static_cast<unsigned int>(json["score"].toInt()),
         static_cast<Utils::Ressource>(json["obj"].toInt())
+    );
+
+    return sc;
+}
+
+QJsonObject ScoreConditionWithMultipleObject::toJson() const {
+    QJsonObject json = ScoreConditionWithObject::toJson();
+    json["quantity"] = static_cast<int>(number);
+    return json;
+}
+
+ScoreConditionWithMultipleObject ScoreConditionWithMultipleObject::fromJson(const QJsonObject &json){
+    ScoreConditionWithMultipleObject sc(
+        static_cast<unsigned int>(json["score"].toInt()),
+        static_cast<Utils::Ressource>(json["obj"].toInt()),
+        static_cast<unsigned int>(json["qunaity"].toInt())
     );
 
     return sc;
