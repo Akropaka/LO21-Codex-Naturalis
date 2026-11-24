@@ -107,6 +107,40 @@ ScoreConditionWithMultipleObject ScoreConditionWithMultipleObject::fromJson(cons
     return sc;
 }
 
+QJsonObject ScoreConditionWithPattern::toJson() const {
+    QJsonObject json = ScoreCondition::toJson();
+    
+    QJsonObject patternJson;
+    
+    for (auto it = pattern.begin(); it != pattern.end(); ++it) {
+        QString keyStr = QString::number(static_cast<int>(it->first.x))+","+QString::number(static_cast<int>(it->first.y));
+        int valueInt = static_cast<int>(it->second);
+        patternJson.insert(keyStr, valueInt);
+    }
+
+    json["pattern"] = patternJson;
+    return json;
+}
+
+ScoreConditionWithPattern ScoreConditionWithPattern::fromJson(const QJsonObject &json){
+    using std::map;
+    map<Utils::Vector2i,Utils::Domaine> mapPattern = map<Utils::Vector2i,Utils::Domaine>();
+
+    const QJsonValue patternJson = json.value("pattern");
+    if (patternJson.isObject()) {
+        const QJsonObject patternObj = patternJson.toObject();
+        for (auto it = patternObj.begin(); it != patternObj.end(); ++it) {
+            QStringList coords = it.key().split(',');
+            Utils::Vector2i position{coords[0].toInt(), coords[1].toInt()};
+            auto domaine = static_cast<Utils::Domaine>(it.value().toInt());
+            mapPattern.insert({position, domaine});
+        }
+    }
+    ScoreConditionWithPattern sc(static_cast<unsigned int>(json["score"].toInt()));
+    sc.pattern = mapPattern;
+    return sc;
+}
+
 QJsonObject ScoreConditionWithBorder::toJson() const {
     QJsonObject json = ScoreCondition::toJson();
     json["onBorder"] = true;
