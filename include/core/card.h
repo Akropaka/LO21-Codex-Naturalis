@@ -132,7 +132,7 @@ namespace Core {
             void removeCardByName(QString name);
             Card& ShowTopCard();
             unsigned int getCount();
-            bool isEmpty(){return getCount == 0;}
+            bool isEmpty(){return getCount() == 0;}
     };
 }
 
