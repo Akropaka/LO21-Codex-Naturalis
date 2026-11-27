@@ -353,46 +353,175 @@ Tools::CardGenerator::CardGenerator(){
 
                     // Case of an Objective Card
                     case 2:{
-                        // Ask for the kingdom/object needed for the score
-                        int Ressource = 0;
-                        cout << "\nWhat is the kingdom/object needed for the card to give points?";
-                        cout << "\n1 | Fungi";
-                        cout << "\n2 | Animal";
-                        cout << "\n3 | Insect";
-                        cout << "\n4 | Plant";
-                        cout << "\n5 | Inkwell";
-                        cout << "\n6 | Quill";
-                        cout << "\n7 | Manuscript";
-                        cout << "\nKingdom/Object (in int) : ";
+                        int card_type = 0;
+                        int object = 0;
+                        int resource = 0;
+                        
+                        
+                        cout << "\nWhat is the type of objective card you want?";
+                        cout << "\n1 | 2 points per pair of identical objects visible in the play area of the player.";
+                        cout << "\n2 | 3 points per set of 3 different objects visible in the play area of the player.";
+                        cout << "\n3 | 2 points per set of 3 identical resources visible in the play area of the player.";
+                        cout << "\n4 | 2 or 3 points per identical pattern in the play area of the player.";
+                        cout << "\nType (in int) : ";
 
-                        while (!(cin >> Ressource) || Ressource != 1 && Ressource != 2 && Ressource != 3 && Ressource != 4 && Ressource != 5 && Ressource != 6 && Ressource != 7){
+                        while (!(cin >> card_type) || card_type != 1 && card_type != 2 && card_type != 3 && card_type != 4){
                             // Invalid value
                             cin.clear();
                             cin.ignore(100000, '\n');
-                            Ressource = 0;
+                            card_type = 0;
 
-                            cout << "!! Invalid choice. Kingdom/Object (in int) : ";
+                            cout << "!! Invalid choice. Score Condition (in int) : ";
                         }
 
-                        // Ask for the score
-                        int score = 0;
-                        cout << "\nHow many points does the card give for each of this kingdom/object on the board?";
-                        cout << "\nNumber of points (in int) : ";
+                        // Per pair of identical objects
+                        if (card_type == 1){     
+                            cout << "\nYou chose per pair of identical objects. What object?";
+                            cout << "\n5 | Inkwell";
+                            cout << "\n6 | Quill";
+                            cout << "\n7 | Manuscript";
+                            cout << "\nObject (in int) : ";
 
-                        while (!(cin >> score) || score <= 0){
-                            // Invalid value
-                            cin.clear();
-                            cin.ignore(100000, '\n');
+                            while (!(cin >> object) || object != 5 && object != 6 && object != 7){
+                                // Invalid value
+                                cin.clear();
+                                cin.ignore(100000, '\n');
+                                object = 0;
 
-                            cout << "!! Invalid choice. Number of points (in int) : ";
+                                cout << "!! Invalid choice. Score Condition (in int) : ";
+                            }
+
+                            // Create the object card and the Json
+
+                            Core::ObjectiveCard new_card(QString::fromStdString(name),
+                                                        Core::ScoreConditionWithMultipleObject(2,static_cast<Utils::Ressource>(object), 2));
+
+                            Json::JsonHandler::getInstance()->WriteCard(new_card,QString::fromStdString(name),"objectives");
+
                         }
 
-                        // Create the object card and the Json
+                        // Per set of 3 different objects
+                        if (card_type == 2){
 
-                        Core::ObjectiveCard new_card(QString::fromStdString(name),
-                                                    Core::ScoreConditionWithObject(score,static_cast<Utils::Ressource>(Ressource)));
+                            // Create the object card and the Json
+                            cout << "NOT IMPLEMENTED YET";
+                            //Core::ObjectiveCard new_card(QString::fromStdString(name),
+                            //                            Core::ScoreConditionWithMultipleObject(3,static_cast<Utils::Ressource>(object), 2));
 
-                        Json::JsonHandler::getInstance()->WriteCard(new_card,QString::fromStdString(name), "objectives");
+                        }
+
+                        // Per set of identical resources
+                        if (card_type == 3){
+                            cout << "\nYou chose per set of 3 identical resources. What resource?";
+                            cout << "\n1 | Fungi";
+                            cout << "\n2 | Animal";
+                            cout << "\n3 | Insect";
+                            cout << "\n4 | Plant";
+
+                            while (!(cin >> resource) || resource != 1 && resource != 2 && resource != 3 && resource != 4){
+                                // Invalid value
+                                cin.clear();
+                                cin.ignore(100000, '\n');
+                                resource = 0;
+
+                                cout << "!! Invalid choice. Resource (in int) : ";
+                            }
+
+                            // Creates the card and the Json
+                            Core::ObjectiveCard new_card(QString::fromStdString(name),
+                                                        Core::ScoreConditionWithMultipleObject(2,static_cast<Utils::Ressource>(resource), 3));
+
+                            Json::JsonHandler::getInstance()->WriteCard(new_card,QString::fromStdString(name),"objectives");
+                        }
+
+                        // Per identical pattern
+                        if (card_type == 4){
+                            int score = 0;
+
+                            cout << "Does your card give 2 or 3 points? Score (in int) : ";
+
+                            while (!(cin >> score) || score < 0 || score != 2 && score != 3){
+                                // Invalid value
+                                cin.clear();
+                                cin.ignore(100000, '\n');
+                                score = 0;
+
+                                cout << "!! Invalid choice. Score (in int) : ";
+                            }
+        
+                            Core::ScoreConditionWithPattern condition(score);
+                            Utils::Vector2i position = {0,0};
+
+                            cout << "\n0 | Fungi";
+                            cout << "\n1 | Animal";
+                            cout << "\n2 | Insect";
+                            cout << "\n3 | Plant";
+                            cout << "\nFirst card (position at (0,0)) : what is the resource? Resource (in int) : ";
+
+                            while (!(cin >> resource) || resource != 0 && resource != 1 && resource != 2 && resource != 3){
+                                // Invalid value
+                                cin.clear();
+                                cin.ignore(100000, '\n');
+                                resource = 0;
+
+                                cout << "!! Invalid choice. Resource (in int) : ";
+                            }
+
+                            condition.AddElementToPattern(static_cast<Utils::Domaine>(resource), {0, 0});
+
+                            cout << "\nSecond card : what is the resource? Resource (in int) : ";
+
+                            while (!(cin >> resource) || resource != 0 && resource != 1 && resource != 2 && resource != 3){
+                                // Invalid value
+                                cin.clear();
+                                cin.ignore(100000, '\n');
+                                resource = 0;
+
+                                cout << "!! Invalid choice. Resource (in int) : ";
+                            }
+
+                            cout << "\nWhat is the position compared to the first card? Position (x y) : ";
+
+                            while (!(cin >> position.x >> position.y)){
+                                // Invalid value
+                                cin.clear();
+                                cin.ignore(100000, '\n');
+                                position = {0,0};
+
+                                cout << "!! Invalid choice. Position (x y) : ";
+                            }
+
+                            condition.AddElementToPattern(static_cast<Utils::Domaine>(resource), position);
+                            
+                            cout << "\nThird card : what is the resource? ";
+
+                            while (!(cin >> resource) || resource != 0 && resource != 1 && resource != 2 && resource != 3){
+                                // Invalid value
+                                cin.clear();
+                                cin.ignore(100000, '\n');
+                                resource = 0;
+
+                                cout << "!! Invalid choice. Resource (in int) : ";
+                            }
+
+                            cout << "\nWhat is the position compared to the first card? Position (x y) : ";
+
+                            while (!(cin >> position.x >> position.y)){
+                                // Invalid value
+                                cin.clear();
+                                cin.ignore(100000, '\n');
+                                resource = 0;
+
+                                cout << "!! Invalid choice. Position (x y) : ";
+                            }
+
+                            condition.AddElementToPattern(static_cast<Utils::Domaine>(resource), position);
+                            
+                            // Creates the card and the Json
+
+                            Core::ObjectiveCard new_card(QString::fromStdString(name),condition);
+                            Json::JsonHandler::getInstance()->WriteCard(new_card,QString::fromStdString(name),"objectives");
+                        }
 
                         cout << "\nCard "<<name<<" created successfully! Returning to menu...\n";
 
@@ -408,7 +537,7 @@ Tools::CardGenerator::CardGenerator(){
                         cout << "\n1 | Animal";
                         cout << "\n2 | Insect";
                         cout << "\n3 | Plant";
-                        cout << "\nKingdom (in int) (Empty by default) : ";
+                        cout << "\nKingdom (in int) : ";
                         
                         while (!(cin >> kingdom) || kingdom != 1 && kingdom != 2 && kingdom != 3 && kingdom != 0){
                             // Invalid value
